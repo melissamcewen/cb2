@@ -1,8 +1,15 @@
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}'],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['cyberpunk', 'synthwave']
+    themes: ['cyberpunk', 'synthwave'],
     //darkTheme: 'synthwave',
+  },
+  theme: {
+    extend: {
+      boxShadow: {
+        DEFAULT: '10px 10px 0px',
+      },
+    },
   },
 };

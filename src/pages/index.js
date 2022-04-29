@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
+import CurlsBot from '../components/curlsbot';
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
         />
         <meta name="og:title" content={siteTitle} />
       </Head>
-      <button className="btn">Hello daisyUIfff</button>
+      <CurlsBot />
     </Layout>
   );
 }

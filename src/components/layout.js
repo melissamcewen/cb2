@@ -11,7 +11,7 @@ export default function Layout({ children, home }) {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="container w-full md:max-w-3xl mx-auto pt-20">{children}</main>
     </div>
   );
 }
