@@ -1,16 +1,12 @@
-
+import Image from 'next/image';
 
 export default function Curlsbot() {
   return (
     <div>
-      <div className="hero lg:bg-base-200 shadow mb-8 mt-5">
-        <div className="hero-content flex flex-col lg:flex-row items-start">
-          <div className="text-center lg:text-left basis-1/3">
-            <h1 className="text-4xl font-bold">
-              Curlsbot Ingredients Analyzer
-            </h1>
-            <div class="divider"></div>
-
+      <div className="card lg:bg-base-200 shadow mb-8 mt-5">
+        <div className="card-content flex flex-col lg:flex-row items-start">
+          <div className="prose text-center lg:text-left basis-1/2 pd-10">
+            <Image src="/curlbot-small.png" height={176} width={135} />
             <div className="form-control  mx-auto">
               <label className="label cursor-pointer">
                 <span className="label-text text-xl">Sulfate-free</span>
@@ -42,11 +38,14 @@ export default function Curlsbot() {
               </div>
             </div>
           </div>
-          <div className="card basis-2/3 w-full">
+          <div className="card basis-2/3 w-full bg-neutral text-neutral-content">
             <div className="card-body">
+              <h1 className="text-xl font-bold">
+                Curlsbot Ingredients Analyzer
+              </h1>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">
+                  <span className="label-text text-neutral-content">
                     Paste an ingredients list here
                   </span>
                 </label>
