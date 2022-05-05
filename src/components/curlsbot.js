@@ -3,8 +3,8 @@
 export default function Curlsbot() {
   return (
     <div>
-      <div className="hero bg-base-200 shadow my-8">
-        <div className="hero-content flex-col lg:flex-row items-start">
+      <div className="hero lg:bg-base-200 shadow mb-8 mt-5">
+        <div className="hero-content flex flex-col lg:flex-row items-start">
           <div className="text-center lg:text-left basis-1/3">
             <h1 className="text-4xl font-bold">
               Curlsbot Ingredients Analyzer
@@ -42,7 +42,7 @@ export default function Curlsbot() {
               </div>
             </div>
           </div>
-          <div className="card basis-2/3">
+          <div className="card basis-2/3 w-full">
             <div className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -63,17 +63,13 @@ export default function Curlsbot() {
           </div>
         </div>
       </div>
-      <div class="prose lg:prose-xl my-8">
-        <h2>Results</h2>
-      </div>
       <div className="grid lg:grid-cols-2 gap-6">
         <div class="card bg-neutral text-neutral-content col-span-2">
           <div class="card-body items-center text-center">
-            <h2 class="card-title">Cookies!</h2>
-            <p>We are using cookies for no reason.</p>
+            <h2 class="card-title">Results</h2>
+            <p>We've detected stuff, see below for details.</p>
             <div class="card-actions justify-end">
-              <button class="btn btn-primary">Accept</button>
-              <button class="btn btn-ghost">Deny</button>
+              <button class="btn btn-primary">New Analysis</button>
             </div>
           </div>
         </div>
