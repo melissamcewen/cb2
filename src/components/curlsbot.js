@@ -3,9 +3,9 @@ import Image from 'next/image';
 export default function Curlsbot() {
   return (
     <div>
-      <div className="card lg:bg-base-200 shadow mb-8 mt-5">
-        <div className="card-content flex flex-col lg:flex-row items-start">
-          <div className="prose text-center lg:text-left basis-1/2 pd-10">
+      <div className="card lg:bg-base-200 lg:shadow mb-8 mt-5 flex">
+        <div className="card-content grid-cols-5 lg:grid	">
+          <div className="prose text-center col-span-2 lg:text-left px-10">
             <Image src="/curlbot-small.png" height={176} width={135} />
             <div className="form-control  mx-auto">
               <label className="label cursor-pointer">
@@ -25,20 +25,18 @@ export default function Curlsbot() {
                 />
               </label>
             </div>
-            <div tabIndex={0} className="collapse">
-              <input type="checkbox" />
-              <div className="collapse-title text-xl font-medium mx-auto px-1	py-2	 flex justify-between">
-                <p>More</p>
-                <button class="btn btn-square btn-sm btn-primary">+</button>
+            <div tabindex="0" class="collapse collapse-plus">
+              <div class="text-xl font-medium label ">
+                <span className="label-text text-xl">More options</span>
               </div>
-              <div className="collapse-content">
+              <div class="collapse-content">
                 <p>
                   tabindex="0" attribute is necessary to make the div focusable
                 </p>
               </div>
             </div>
           </div>
-          <div className="card basis-2/3 w-full bg-neutral text-neutral-content">
+          <div className="card col-span-3 w-full bg-neutral text-neutral-content">
             <div className="card-body">
               <h1 className="text-xl font-bold">
                 Curlsbot Ingredients Analyzer
