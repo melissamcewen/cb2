@@ -3,11 +3,18 @@ import Image from 'next/image';
 export default function Curlsbot() {
   return (
     <div>
-      <div className="card lg:bg-base-200 lg:shadow mb-8 mt-5 flex">
+      <div className="card lg:bg-accent lg:shadow mb-8 mt-5 flex">
         <div className="card-content grid-cols-5 lg:grid	">
-          <div className="prose text-center col-span-2 lg:text-left px-10">
-            <Image src="/curlbot-small.png" height={176} width={135} />
-            <div className="form-control  mx-auto">
+          <div className="prose col-span-2 flex flex-wrap lg:text-left p-5 justify-center">
+            <div className="self-center">
+              <Image
+                src="/curlbot-small.png"
+                className=""
+                height={176}
+                width={135}
+              />
+            </div>
+            <div className="form-control w-full">
               <label className="label cursor-pointer">
                 <span className="label-text text-xl">Sulfate-free</span>
                 <input
@@ -36,7 +43,7 @@ export default function Curlsbot() {
               </div>
             </div>
           </div>
-          <div className="card col-span-3 w-full bg-neutral text-neutral-content">
+          <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">
             <div className="card-body">
               <h1 className="text-xl font-bold">
                 Curlsbot Ingredients Analyzer
@@ -48,7 +55,7 @@ export default function Curlsbot() {
                   </span>
                 </label>
                 <textarea
-                  className="textarea textarea-bordered h-52"
+                  className="textarea textarea-bordered h-52 bg-accent"
                   placeholder="Find the ingredients list on the brand website and paste it here"
                   defaultValue={''}
                 />
