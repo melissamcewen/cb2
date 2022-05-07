@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import { PlusIcon } from '@heroicons/react/solid';
 
 export default function Curlsbot() {
   return (
     <div>
       <div className="card lg:bg-accent lg:shadow mb-8 mt-5 flex">
         <div className="card-content grid-cols-5 lg:grid	">
-          <div className="prose col-span-2 flex flex-wrap lg:text-left p-5 justify-center">
+          <div className="prose col-span-2 flex flex-wrap content-start lg:text-left p-5 justify-center">
             <div className="self-center">
               <Image
                 src="/curlbot-small.png"
@@ -35,6 +36,9 @@ export default function Curlsbot() {
             <div tabindex="0" class="collapse collapse-plus">
               <div class="text-xl font-medium label ">
                 <span className="label-text text-xl">More options</span>
+                <button class="btn btn-square btn-primary btn-sm">
+                  <PlusIcon className="h-6 w-6" />
+                </button>
               </div>
               <div class="collapse-content">
                 <p>
@@ -55,7 +59,7 @@ export default function Curlsbot() {
                   </span>
                 </label>
                 <textarea
-                  className="textarea textarea-bordered h-52 bg-accent"
+                  className="textarea textarea-bordered h-52 textarea textarea-accent"
                   placeholder="Find the ingredients list on the brand website and paste it here"
                   defaultValue={''}
                 />
