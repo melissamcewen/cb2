@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { PlusIcon } from '@heroicons/react/solid';
+import { PlusIcon, ExclamationIcon } from '@heroicons/react/solid';
 
 export default function Curlsbot() {
   return (
@@ -33,14 +33,14 @@ export default function Curlsbot() {
                 />
               </label>
             </div>
-            <div tabindex="0" class="collapse collapse-plus">
-              <div class="text-xl font-medium label ">
+            <div tabindex="0" className="collapse collapse-plus">
+              <div className="text-xl font-medium label ">
                 <span className="label-text text-xl">More options</span>
-                <button class="btn btn-square btn-primary btn-sm">
+                <button className="btn btn-square btn-primary btn-sm">
                   <PlusIcon className="h-6 w-6" />
                 </button>
               </div>
-              <div class="collapse-content">
+              <div className="collapse-content">
                 <p>
                   tabindex="0" attribute is necessary to make the div focusable
                 </p>
@@ -72,42 +72,54 @@ export default function Curlsbot() {
         </div>
       </div>
       <div className="grid lg:grid-cols-2 gap-6">
-        <div class="card bg-neutral text-neutral-content col-span-2">
-          <div class="card-body items-center text-center">
-            <h2 class="card-title">Results</h2>
+        <div className="card bg-error col-span-2">
+          <div className="card-body items-center text-center">
+            <h2 className="card-title py-5">
+              <ExclamationIcon className="h-7 w-7" />
+              Results
+            </h2>
             <p>We've detected stuff, see below for details.</p>
-            <div class="card-actions justify-end">
-              <button class="btn btn-primary">New Analysis</button>
+            <div className="card-actions justify-end py-5">
+              <button className="btn btn-outline">New Analysis</button>
+              <button className="btn btn-outline">
+                Get Product Recommendations
+              </button>
             </div>
           </div>
         </div>
-        <div class="card bg-warning text-primary-content">
-          <div class="card-body prose">
-            <h2 class="card-title">Sulfates Detected</h2>
-            <ul>
-              <li>Sulfate 1 </li>
-              <li>Sulfate 2 </li>
-            </ul>
-            <div class="card-actions justify-end">
-              <button class="btn">More info</button>
+        <div className="card bg-error text-primary-content">
+          <div className="card-body justify-between">
+            <h2 className="card-title">
+              <ExclamationIcon className="h-7 w-7" />
+              Sulfates Detected
+            </h2>
+            <div className="prose">
+              <ul>
+                <li>Sulfate 1 </li>
+                <li>Sulfate 2 </li>
+              </ul>
+            </div>
+
+            <div className="card-actions justify-end content-end">
+              <button className="btn">More info</button>
             </div>
           </div>
         </div>
-        <div class="card bg-error text-primary-content">
-          <div class="card-body">
-            <h2 class="card-title">Card title!</h2>
+        <div className="card bg-info text-primary-content">
+          <div className="card-body prose">
+            <h2 className="card-title">Product Recommendation</h2>
             <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-              <button class="btn">Buy Now</button>
+            <div className="card-actions justify-end">
+              <button className="btn">Buy Now</button>
             </div>
           </div>
         </div>
-        <div class="card bg-info text-primary-content">
-          <div class="card-body">
-            <h2 class="card-title">Card title!</h2>
+        <div className="card bg-info text-primary-content">
+          <div className="card-body">
+            <h2 className="card-title">Card title!</h2>
             <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div class="card-actions justify-end">
-              <button class="btn">Buy Now</button>
+            <div className="card-actions justify-end">
+              <button className="btn">Buy Now</button>
             </div>
           </div>
         </div>
