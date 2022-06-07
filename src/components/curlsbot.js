@@ -1,129 +1,39 @@
 import Image from 'next/image';
-import { PlusIcon, ExclamationIcon } from '@heroicons/react/solid';
+
+import PrefForm from './pref-form';
+import EntryForm from './entry-form';
+import AdvancedForm from './advanced-form';
+const basicPrefs = [ "Silicones", "Sulfates"];
 
 export default function Curlsbot() {
   return (
     <div>
-      <div className="card lg:bg-accent lg:shadow mb-8 mt-5 flex">
-        <div className="card-content grid-cols-5 lg:grid	">
-          <div className="prose col-span-2 flex flex-wrap content-start lg:text-left p-5 justify-center">
+      <div className="card md:bg-accent md:shadow mb-8 mt-5 flex text-accent-content">
+        <div className="card-content grid-cols-5 md:grid	">
+          <div className="prose col-span-2 flex flex-wrap content-start md:text-left p-5 justify-center ">
+            <h1 className="text-xl font-bold text-center w-full text-accent-content">
+              Curlsbot Ingredients Analyzer
+            </h1>
+
             <div className="self-center">
-              <Image
-                src="/curlbot-small.png"
-                className=""
-                height={176}
-                width={135}
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label cursor-pointer">
-                <span className="label-text text-xl">Sulfate-free</span>
-                <input
-                  type="checkbox"
-                  checked="checked"
-                  className="checkbox checkbox-lg checkbox-primary"
+              <div class="tooltip tooltip-open tooltip-right" data-tip="hello">
+                <Image
+                  src="/curlbot-small.png"
+                  className=""
+                  height={120}
+                  width={85}
                 />
-              </label>
-              <label className="label cursor-pointer">
-                <span className="label-text text-xl">Silicone-Free</span>
-                <input
-                  type="checkbox"
-                  checked="checked"
-                  className="checkbox checkbox-lg checkbox-primary"
-                />
-              </label>
-            </div>
-            <div tabindex="0" className="collapse collapse-plus">
-              <div className="text-xl font-medium label ">
-                <span className="label-text text-xl">More options</span>
-                <button className="btn btn-square btn-primary btn-sm">
-                  <PlusIcon className="h-6 w-6" />
-                </button>
-              </div>
-              <div className="collapse-content">
-                <p>
-                  tabindex="0" attribute is necessary to make the div focusable
-                </p>
               </div>
             </div>
+            <PrefForm basicprefs={basicPrefs} />
+            <AdvancedForm />
           </div>
           <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">
-            <div className="card-body">
-              <h1 className="text-xl font-bold">
-                Curlsbot Ingredients Analyzer
-              </h1>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text text-neutral-content">
-                    Paste an ingredients list here
-                  </span>
-                </label>
-                <textarea
-                  className="textarea textarea-bordered h-52 textarea textarea-accent"
-                  placeholder="Find the ingredients list on the brand website and paste it here"
-                  defaultValue={''}
-                />
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn btn-primary">Analyze</button>
-              </div>
-            </div>
+            <EntryForm />
           </div>
         </div>
       </div>
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="card bg-error col-span-2">
-          <div className="card-body items-center text-center">
-            <h2 className="card-title py-5">
-              <ExclamationIcon className="h-7 w-7" />
-              Results
-            </h2>
-            <p>We've detected stuff, see below for details.</p>
-            <div className="card-actions justify-end py-5">
-              <button className="btn btn-outline">New Analysis</button>
-              <button className="btn btn-outline">
-                Get Product Recommendations
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="card bg-error text-primary-content">
-          <div className="card-body justify-between">
-            <h2 className="card-title">
-              <ExclamationIcon className="h-7 w-7" />
-              Sulfates Detected
-            </h2>
-            <div className="prose">
-              <ul>
-                <li>Sulfate 1 </li>
-                <li>Sulfate 2 </li>
-              </ul>
-            </div>
-
-            <div className="card-actions justify-end content-end">
-              <button className="btn">More info</button>
-            </div>
-          </div>
-        </div>
-        <div className="card bg-info text-primary-content">
-          <div className="card-body prose">
-            <h2 className="card-title">Product Recommendation</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn">Buy Now</button>
-            </div>
-          </div>
-        </div>
-        <div className="card bg-info text-primary-content">
-          <div className="card-body">
-            <h2 className="card-title">Card title!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn">Buy Now</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div className="grid lg:grid-cols-2 gap-6">{/* Results */}</div>
     </div>
   );
 }
