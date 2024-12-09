@@ -48,3 +48,15 @@ export interface PrefFormProps {
   onPreferenceChange: (pref: string, checked: boolean) => void;
   advancedCategories: Record<string, AdvancedCategory>;
 }
+
+export enum ResultState {
+  INFO = 'info',
+  WARNING = 'warning',
+  CAUTION = 'caution'
+}
+
+export interface ResultsCardProps {
+  state: ResultState;
+  title: string;
+  message: string;
+}

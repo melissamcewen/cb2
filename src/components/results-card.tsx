@@ -1,14 +1,35 @@
-import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
+import { ExclamationTriangleIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
+import { ResultState, ResultsCardProps } from '../types';
 
-export default function ResultsCard(): JSX.Element {
+const stateConfig = {
+  [ResultState.INFO]: {
+    icon: InformationCircleIcon,
+    bgColor: 'bg-info',
+    textColor: 'text-info-content'
+  },
+  [ResultState.WARNING]: {
+    icon: ExclamationTriangleIcon,
+    bgColor: 'bg-warning',
+    textColor: 'text-warning-content'
+  },
+  [ResultState.CAUTION]: {
+    icon: ExclamationTriangleIcon,
+    bgColor: 'bg-error',
+    textColor: 'text-error-content'
+  }
+};
+
+export default function ResultsCard({ state, title, message }: ResultsCardProps): JSX.Element {
+  const { icon: Icon, bgColor, textColor } = stateConfig[state];
+
   return (
-    <div className="card bg-error col-span-2 text-accent-content">
+    <div data-testid="results-card" className={`card col-span-2 ${bgColor} ${textColor}`}>
       <div className="card-body items-center text-center">
         <h2 className="card-title py-5">
-          <ExclamationTriangleIcon className="h-7 w-7" />
-          Results
+          <Icon className="h-7 w-7" />
+          {title}
         </h2>
-        <p>We&apos;ve detected stuff, see below for details.</p>
+        <p>{message}</p>
         <div className="card-actions justify-end py-5">
           <button className="btn">New Analysis</button>
           <button className="btn">Get Product Recommendations</button>

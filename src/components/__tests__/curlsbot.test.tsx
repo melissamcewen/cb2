@@ -76,15 +76,15 @@ describe('Curlsbot', () => {
     render(<Curlsbot />);
 
     // Results should not be visible initially
-    expect(screen.queryByText('Results')).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Results' })).not.toBeInTheDocument();
 
     // Click analyze button
     await act(async () => {
       fireEvent.click(screen.getByText('Analyze'));
     });
 
-    // Results should now be visible
-    expect(screen.getByText('Results')).toBeInTheDocument();
+    // Results should now be visible with default state
+    expect(screen.getByRole('heading', { name: 'Results' })).toBeInTheDocument();
   });
 
   it('shows ingredients cards when analyze is clicked', async () => {

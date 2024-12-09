@@ -5,7 +5,7 @@ import EntryForm from './entry-form';
 import AdvancedForm from './advanced-form';
 import ResultsCard from './results-card';
 import IngredientsCard from './ingredients-card';
-import { CategoryGroup } from '../types';
+import { CategoryGroup, ResultState } from '../types';
 
 const categoryGroups: Record<string, CategoryGroup> = {
   silicones: {
@@ -127,7 +127,11 @@ export default function Curlsbot(): JSX.Element {
       <div className="grid lg:grid-cols-2 gap-6">
         {showResults && (
           <>
-            <ResultsCard />
+            <ResultsCard
+              state={ResultState.INFO}
+              title="Results"
+              message="We've analyzed your ingredients. See details below."
+            />
             {testIngredients.map((ingredient) => (
               <IngredientsCard key={ingredient.name} ingredient={ingredient} />
             ))}
