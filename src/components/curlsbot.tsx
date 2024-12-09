@@ -6,9 +6,14 @@ import AdvancedForm from './advanced-form';
 import ResultsCard from './results-card';
 
 const basicPrefs = ["Silicones", "Sulfates"];
+const defaultPreferences = {
+  "Silicones": true,
+  "Sulfates": true,
+  "Waxes": true
+};
 
 export default function Curlsbot(): JSX.Element {
-  const [preferences, setPreferences] = useState<Record<string, boolean>>({});
+  const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
   const [showResults, setShowResults] = useState(false);
 
   const handlePreferenceChange = (pref: string, checked: boolean) => {
