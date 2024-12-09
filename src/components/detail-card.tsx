@@ -1,4 +1,6 @@
-export default function detailCard() {
+import { ExclamationIcon } from '@heroicons/react/24/solid';
+
+export default function DetailCard(): JSX.Element {
   return (
     <div className="card bg-error text-primary-content">
       <div className="card-body justify-between">
@@ -8,8 +10,8 @@ export default function detailCard() {
         </h2>
         <div className="prose">
           <ul>
-            <li>Sulfate 1 </li>
-            <li>Sulfate 2 </li>
+            <li>Sulfate 1</li>
+            <li>Sulfate 2</li>
           </ul>
         </div>
 

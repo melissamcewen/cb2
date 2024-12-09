@@ -1,11 +1,11 @@
-export default function navBar() {
+export default function Navbar(): JSX.Element {
   return (
     <div className="navbar bg-primary text-primary-content">
       <div className="navbar-start">
         <a className="btn btn-ghost normal-case text-xl">Curlsbot</a>
       </div>
       <div className="navbar-center">
-        <ul class="menu menu-horizontal p-0">
+        <ul className="menu menu-horizontal p-0">
           <li>
             <a>Blog</a>
           </li>
@@ -15,7 +15,7 @@ export default function navBar() {
         </ul>
       </div>
       <div className="navbar-end">
-        <a class="btn">Get started</a>
+        <a className="btn">Get started</a>
       </div>
     </div>
   );

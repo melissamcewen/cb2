@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Layout, { siteTitle } from '../components/layout';
 import CurlsBot from '../components/curlsbot';
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <Layout>
       <Head>

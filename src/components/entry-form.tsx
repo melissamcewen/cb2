@@ -1,4 +1,4 @@
-export default function entryForm() {
+export default function EntryForm(): JSX.Element {
   return (
     <div className="card-body">
       <div className="form-control">
@@ -10,7 +10,7 @@ export default function entryForm() {
         <textarea
           className="textarea textarea-bordered h-52 textarea textarea-accent"
           placeholder="Find the ingredients list on the brand website and paste it here"
-          defaultValue={''}
+          defaultValue=""
         />
       </div>
       <div className="form-control mt-6">

@@ -1,6 +1,6 @@
-import { ExclamationIcon } from '@heroicons/react/solid';
+import { ExclamationIcon } from '@heroicons/react/24/solid';
 
-export default function resultsCard() {
+export default function ResultsCard(): JSX.Element {
   return (
     <div className="card bg-error col-span-2 text-accent-content">
       <div className="card-body items-center text-center">
