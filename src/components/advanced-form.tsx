@@ -1,19 +1,12 @@
 import { useState } from 'react';
 import Checkbox from './checkbox';
+import { AdvancedFormProps } from '../types';
 
-const advancedPrefs = [
-  "Waxes",
-  "Soap",
-  "Water Soluble Silicones",
-  "Non-water Soluble Silicones"
-];
-
-interface AdvancedFormProps {
-  preferences: Record<string, boolean>;
-  onPreferenceChange: (pref: string, checked: boolean) => void;
-}
-
-export default function AdvancedForm({ preferences, onPreferenceChange }: AdvancedFormProps): JSX.Element {
+export default function AdvancedForm({
+  preferences,
+  onPreferenceChange,
+  advancedCategories
+}: AdvancedFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -27,12 +20,12 @@ export default function AdvancedForm({ preferences, onPreferenceChange }: Advanc
 
       {isOpen && (
         <div className="mt-2 space-y-2">
-          {advancedPrefs.map((pref) => (
+          {Object.entries(advancedCategories).map(([key, category]) => (
             <Checkbox
-              key={pref}
-              label={pref}
-              checked={preferences[pref] || false}
-              onChange={(checked) => onPreferenceChange(pref, checked)}
+              key={key}
+              label={category.name}
+              checked={preferences[key] || false}
+              onChange={(checked) => onPreferenceChange(key, checked)}
             />
           ))}
         </div>

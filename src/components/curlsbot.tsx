@@ -5,12 +5,49 @@ import EntryForm from './entry-form';
 import AdvancedForm from './advanced-form';
 import ResultsCard from './results-card';
 import IngredientsCard from './ingredients-card';
+import { CategoryGroup } from '../types';
 
-const basicPrefs = ['Silicones', 'Sulfates'];
+const categoryGroups: Record<string, CategoryGroup> = {
+  silicones: {
+    name: 'Silicones',
+    description: 'Compounds that can form a barrier on hair',
+    categories: {}
+  },
+  sulfates: {
+    name: 'Sulfates',
+    description: 'Strong cleansing agents',
+    categories: {}
+  }
+};
+
+const advancedCategories = {
+  'water-soluble': {
+    name: 'Water Soluble Silicones',
+    description: 'Silicones that can be removed with water',
+    parentGroup: 'silicones'
+  },
+  'non-water-soluble': {
+    name: 'Non-water Soluble Silicones',
+    description: 'Silicones that require stronger cleansers',
+    parentGroup: 'silicones'
+  },
+  'waxes': {
+    name: 'Waxes',
+    description: 'Ingredients that can build up on hair',
+    parentGroup: ''
+  },
+  'soap': {
+    name: 'Soap',
+    description: 'Traditional cleansing agents that can be harsh',
+    parentGroup: ''
+  }
+};
+
 const defaultPreferences = {
-  Silicones: true,
-  Sulfates: true,
-  Waxes: true,
+  'water-soluble': true,
+  'non-water-soluble': true,
+  'sls': true,
+  'sles': true
 };
 
 const testIngredients = [
@@ -34,8 +71,7 @@ const testIngredients = [
 ];
 
 export default function Curlsbot(): JSX.Element {
-  const [preferences, setPreferences] =
-    useState<Record<string, boolean>>(defaultPreferences);
+  const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
   const [showResults, setShowResults] = useState(false);
 
   const handlePreferenceChange = (pref: string, checked: boolean): void => {
@@ -72,13 +108,15 @@ export default function Curlsbot(): JSX.Element {
               </div>
             </div>
             <PrefForm
-              basicprefs={basicPrefs}
+              categoryGroups={categoryGroups}
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
+              advancedCategories={advancedCategories}
             />
             <AdvancedForm
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
+              advancedCategories={advancedCategories}
             />
           </div>
           <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">
