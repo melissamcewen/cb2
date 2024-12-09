@@ -4,22 +4,44 @@ import PrefForm from './pref-form';
 import EntryForm from './entry-form';
 import AdvancedForm from './advanced-form';
 import ResultsCard from './results-card';
+import IngredientsCard from './ingredients-card';
 
-const basicPrefs = ["Silicones", "Sulfates"];
+const basicPrefs = ['Silicones', 'Sulfates'];
 const defaultPreferences = {
-  "Silicones": true,
-  "Sulfates": true,
-  "Waxes": true
+  Silicones: true,
+  Sulfates: true,
+  Waxes: true,
 };
 
+const testIngredients = [
+  {
+    name: 'Sodium Lauryl Sulfate',
+    description:
+      'A strong cleansing agent that can be drying to hair and skin.',
+    category: ['Sulfate', 'Cleanser'],
+    notes: 'Common in shampoos and cleansers',
+    link: ['https://curlsbot.com/ingredients/sodium-lauryl-sulfate'],
+    synonyms: ['SLS', 'Sodium dodecyl sulfate'],
+  },
+  {
+    name: 'Dimethicone',
+    description: 'A silicone that forms a barrier on hair. May cause buildup.',
+    category: ['Silicone', 'Non-water Soluble'],
+    notes: 'Common in conditioners and styling products',
+    link: ['https://curlsbot.com/ingredients/dimethicone'],
+    synonyms: ['Dimethylpolysiloxane'],
+  },
+];
+
 export default function Curlsbot(): JSX.Element {
-  const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
+  const [preferences, setPreferences] =
+    useState<Record<string, boolean>>(defaultPreferences);
   const [showResults, setShowResults] = useState(false);
 
   const handlePreferenceChange = (pref: string, checked: boolean): void => {
-    setPreferences(prev => ({
+    setPreferences((prev) => ({
       ...prev,
-      [pref]: checked
+      [pref]: checked,
     }));
   };
 
@@ -36,7 +58,10 @@ export default function Curlsbot(): JSX.Element {
               Curlsbot Ingredients Analyzer
             </h1>
             <div className="self-center">
-              <div className="tooltip tooltip-open tooltip-right" data-tip="hello">
+              <div
+                className="tooltip tooltip-open tooltip-right"
+                data-tip="hello"
+              >
                 <Image
                   src="/curlbot-small.png"
                   className=""
@@ -62,7 +87,14 @@ export default function Curlsbot(): JSX.Element {
         </div>
       </div>
       <div className="grid lg:grid-cols-2 gap-6">
-        {showResults && <ResultsCard />}
+        {showResults && (
+          <>
+            <ResultsCard />
+            {testIngredients.map((ingredient) => (
+              <IngredientsCard key={ingredient.name} ingredient={ingredient} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

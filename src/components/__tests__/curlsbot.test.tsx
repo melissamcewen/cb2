@@ -86,4 +86,42 @@ describe('Curlsbot', () => {
     // Results should now be visible
     expect(screen.getByText('Results')).toBeInTheDocument();
   });
+
+  it('shows ingredients cards when analyze is clicked', async () => {
+    render(<Curlsbot />);
+
+    // Initially ingredients should not be visible
+    expect(screen.queryByText('Sodium Lauryl Sulfate')).not.toBeInTheDocument();
+    expect(screen.queryByText('Dimethicone')).not.toBeInTheDocument();
+
+    // Click analyze button
+    await act(async () => {
+      fireEvent.click(screen.getByText('Analyze'));
+    });
+
+    // Verify ingredients cards are shown
+    await waitFor(() => {
+      expect(screen.getByText('Sodium Lauryl Sulfate')).toBeInTheDocument();
+      expect(screen.getByText('Dimethicone')).toBeInTheDocument();
+    });
+
+    // Verify categories are shown
+    expect(screen.getByText('Sulfate')).toBeInTheDocument();
+    expect(screen.getByText('Silicone')).toBeInTheDocument();
+  });
+
+  it('shows ingredient details correctly', async () => {
+    render(<Curlsbot />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Analyze'));
+    });
+
+    // Check for detailed information
+    await waitFor(() => {
+      expect(screen.getByText(/strong cleansing agent/i)).toBeInTheDocument();
+      expect(screen.getByText(/common in shampoos/i)).toBeInTheDocument();
+      expect(screen.getAllByRole('link', { name: /more info/i })).toHaveLength(2);
+    });
+  });
 });
