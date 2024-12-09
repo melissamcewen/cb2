@@ -71,4 +71,19 @@ describe('Curlsbot', () => {
       expect(screen.queryByLabelText('Waxes')).not.toBeInTheDocument();
     });
   });
+
+  it('shows results when analyze is clicked', async () => {
+    render(<Curlsbot />);
+
+    // Results should not be visible initially
+    expect(screen.queryByText('Results')).not.toBeInTheDocument();
+
+    // Click analyze button
+    await act(async () => {
+      fireEvent.click(screen.getByText('Analyze'));
+    });
+
+    // Results should now be visible
+    expect(screen.getByText('Results')).toBeInTheDocument();
+  });
 });

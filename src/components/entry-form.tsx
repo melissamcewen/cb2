@@ -1,20 +1,21 @@
-export default function EntryForm(): JSX.Element {
+interface EntryFormProps {
+  onAnalyze: () => void;
+}
+
+export default function EntryForm({ onAnalyze }: EntryFormProps): JSX.Element {
   return (
     <div className="card-body">
+      <h2 className="card-title">Enter your ingredients list</h2>
       <div className="form-control">
-        <label className="label">
-          <span className="label-text text-accent-content">
-            Paste an ingredients list here
-          </span>
-        </label>
         <textarea
-          className="textarea textarea-bordered h-52 textarea textarea-accent"
-          placeholder="Find the ingredients list on the brand website and paste it here"
-          defaultValue=""
-        />
+          className="textarea textarea-bordered h-24"
+          placeholder="Paste your ingredients list here"
+        ></textarea>
       </div>
-      <div className="form-control mt-6">
-        <button className="btn btn-primary">Analyze</button>
+      <div className="card-actions justify-end">
+        <button className="btn btn-primary" onClick={onAnalyze}>
+          Analyze
+        </button>
       </div>
     </div>
   );

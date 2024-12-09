@@ -3,17 +3,23 @@ import Image from 'next/image';
 import PrefForm from './pref-form';
 import EntryForm from './entry-form';
 import AdvancedForm from './advanced-form';
+import ResultsCard from './results-card';
 
 const basicPrefs = ["Silicones", "Sulfates"];
 
 export default function Curlsbot(): JSX.Element {
   const [preferences, setPreferences] = useState<Record<string, boolean>>({});
+  const [showResults, setShowResults] = useState(false);
 
   const handlePreferenceChange = (pref: string, checked: boolean) => {
     setPreferences(prev => ({
       ...prev,
       [pref]: checked
     }));
+  };
+
+  const handleAnalyze = () => {
+    setShowResults(true);
   };
 
   return (
@@ -24,7 +30,6 @@ export default function Curlsbot(): JSX.Element {
             <h1 className="text-xl font-bold text-center w-full text-accent-content">
               Curlsbot Ingredients Analyzer
             </h1>
-
             <div className="self-center">
               <div className="tooltip tooltip-open tooltip-right" data-tip="hello">
                 <Image
@@ -47,11 +52,13 @@ export default function Curlsbot(): JSX.Element {
             />
           </div>
           <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">
-            <EntryForm />
+            <EntryForm onAnalyze={handleAnalyze} />
           </div>
         </div>
       </div>
-      <div className="grid lg:grid-cols-2 gap-6">{/* Results */}</div>
+      <div className="grid lg:grid-cols-2 gap-6">
+        {showResults && <ResultsCard />}
+      </div>
     </div>
   );
 }
