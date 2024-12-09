@@ -1,11 +1,11 @@
-import { ExclamationIcon } from '@heroicons/react/24/solid';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
 
 export default function DetailCard(): JSX.Element {
   return (
     <div className="card bg-error text-primary-content">
       <div className="card-body justify-between">
         <h2 className="card-title">
-          <ExclamationIcon className="h-7 w-7" />
+          <ExclamationTriangleIcon className="h-7 w-7" />
           Sulfates Detected
         </h2>
         <div className="prose">

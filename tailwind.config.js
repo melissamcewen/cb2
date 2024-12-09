@@ -2,7 +2,7 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   plugins: [require('daisyui'), require('@tailwindcss/typography')],
   daisyui: {
-    themes: ['cyberpunk', 'night', 'dark'],
+    themes: ['light', 'dark', 'cupcake', 'synthwave', 'retro', 'cyberpunk', 'valentine', 'garden'],
     darkTheme: 'dark',
   },
   theme: {

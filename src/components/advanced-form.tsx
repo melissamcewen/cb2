@@ -31,6 +31,7 @@ export default function AdvancedForm({ preferences, onPreferenceChange }: Advanc
             <Checkbox
               key={pref}
               label={pref}
+              checked={preferences[pref] || false}
               onChange={(checked) => onPreferenceChange(pref, checked)}
             />
           ))}
