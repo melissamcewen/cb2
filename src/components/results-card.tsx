@@ -8,7 +8,7 @@ export default function ResultsCard(): JSX.Element {
           <ExclamationTriangleIcon className="h-7 w-7" />
           Results
         </h2>
-        <p>We've detected stuff, see below for details.</p>
+        <p>We&apos;ve detected stuff, see below for details.</p>
         <div className="card-actions justify-end py-5">
           <button className="btn">New Analysis</button>
           <button className="btn">Get Product Recommendations</button>

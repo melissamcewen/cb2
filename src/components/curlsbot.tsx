@@ -16,14 +16,14 @@ export default function Curlsbot(): JSX.Element {
   const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
   const [showResults, setShowResults] = useState(false);
 
-  const handlePreferenceChange = (pref: string, checked: boolean) => {
+  const handlePreferenceChange = (pref: string, checked: boolean): void => {
     setPreferences(prev => ({
       ...prev,
       [pref]: checked
     }));
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = (): void => {
     setShowResults(true);
   };
 

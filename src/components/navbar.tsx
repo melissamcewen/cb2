@@ -20,7 +20,7 @@ export default function Navbar(): JSX.Element {
     document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
 
-  const handleThemeChange = (theme: string) => {
+  const handleThemeChange = (theme: string): void => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
   };
