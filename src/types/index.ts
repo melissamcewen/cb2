@@ -1,7 +1,12 @@
-import type { CategoryGroup, Category, MatchConfig, MatchDetails } from 'haircare-ingredients-analyzer';
+import type {
+  CategoryGroup,
+  Category,
+  MatchConfig,
+  MatchDetails,
+  Ingredient,
+} from 'haircare-ingredients-analyzer';
 
 export type { CategoryGroup, Category, MatchConfig, MatchDetails };
-
 
 export interface CheckboxProps {
   label: string;
@@ -36,7 +41,7 @@ export interface PrefFormProps {
 export enum ResultState {
   INFO = 'info',
   WARNING = 'warning',
-  CAUTION = 'caution'
+  CAUTION = 'caution',
 }
 
 export interface ResultsCardProps {
@@ -46,9 +51,9 @@ export interface ResultsCardProps {
 }
 
 export interface CategoryConfig {
-  mainGroups: string[];  // Category group IDs to show in main options
-  mainCategories: string[];  // Individual category IDs to show in main options
-  advancedCategories: string[];  // Category IDs to show in advanced options
+  mainGroups: string[]; // Category group IDs to show in main options
+  mainCategories: string[]; // Individual category IDs to show in main options
+  advancedCategories: string[]; // Category IDs to show in advanced options
 }
 
 export interface IngredientsCardProps {

@@ -1,6 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import IngredientsCard from '../ingredients-card';
-import type { Ingredient, MatchDetails, MatchType, MatchSearch } from 'haircare-ingredients-analyzer';
+import type {
+  Ingredient,
+  MatchDetails,
+  MatchType,
+  MatchSearch,
+} from 'haircare-ingredients-analyzer';
 
 const mockIngredient: Ingredient = {
   name: 'Test Ingredient',
@@ -16,21 +21,21 @@ describe('IngredientsCard', () => {
     confidence: 1,
     matched: true,
     matchTypes: ['exactMatch'],
-    searchType: 'ingredient'
+    searchType: 'ingredient',
   };
 
   const mockLowMatch: MatchDetails = {
     confidence: 0.5,
     matched: true,
     matchTypes: ['partialMatch'],
-    searchType: 'ingredient'
+    searchType: 'ingredient',
   };
 
   const mockUnknownMatch: MatchDetails = {
     confidence: 0,
     matched: false,
     matchTypes: ['fuzzyMatch'],
-    searchType: 'ingredient'
+    searchType: 'ingredient',
   };
 
   it('renders ingredient details with perfect match', () => {
@@ -88,7 +93,9 @@ describe('IngredientsCard', () => {
       />,
     );
 
-    expect(screen.getByText(mockIngredient.notes)).toBeInTheDocument();
+    if (mockIngredient.notes) {
+      expect(screen.getByText(mockIngredient.notes)).toBeInTheDocument();
+    }
   });
 
   it('renders more info link when provided', () => {
@@ -100,9 +107,11 @@ describe('IngredientsCard', () => {
     );
 
     const link = screen.getByRole('link', { name: /more info/i });
-    expect(link).toHaveAttribute('href', mockIngredient.link[0]);
-    expect(link).toHaveAttribute('target', '_blank');
-    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    if (mockIngredient.link) {
+      expect(link).toHaveAttribute('href', mockIngredient.link[0]);
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    }
   });
 
   it('renders minimal ingredient info without optional fields', () => {
