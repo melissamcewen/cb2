@@ -2,6 +2,7 @@ import type { Ingredient, MatchDetails } from 'haircare-ingredients-analyzer';
 import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
+  XCircleIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/24/solid';
 import { MatchType, MatchSearch } from 'haircare-ingredients-analyzer';
@@ -14,9 +15,9 @@ const getMatchState = (confidence: number) => {
 
 const stateConfig = {
   perfect: {
-    icon: CheckCircleIcon,
-    bgColor: 'bg-success',
-    textColor: 'text-success-content',
+    icon: XCircleIcon,
+    bgColor: 'bg-error',
+    textColor: 'text-error-content',
     label: 'Perfect Match',
   },
   low_confidence: {

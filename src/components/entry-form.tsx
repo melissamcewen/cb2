@@ -4,7 +4,7 @@ interface EntryFormProps {
 
 export default function EntryForm({ onAnalyze }: EntryFormProps): JSX.Element {
   return (
-    <div className="card-body">
+    <div className="card-body bg-accent">
       <h2 className="card-title">Enter your ingredients list</h2>
       <div className="form-control">
         <textarea

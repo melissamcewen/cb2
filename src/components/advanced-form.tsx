@@ -21,7 +21,7 @@ export default function AdvancedForm({
     .filter(([categoryId]) => config.advancedCategories.includes(categoryId));
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-accent">
       <button
         onClick={() => onOpenChange(!isOpen)}
         className="btn btn-sm btn-ghost w-full"

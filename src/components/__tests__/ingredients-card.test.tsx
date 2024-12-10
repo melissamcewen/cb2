@@ -140,7 +140,7 @@ describe('IngredientsCard', () => {
       />,
     );
 
-    expect(screen.getByTestId('ingredients-card')).toHaveClass('bg-success');
+    expect(screen.getByTestId('ingredients-card')).toHaveClass('bg-error');
 
     rerender(
       <IngredientsCard

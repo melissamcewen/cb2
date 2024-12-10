@@ -26,7 +26,7 @@ export default function Curlsbot(): JSX.Element {
 
   return (
     <div>
-      <div className="card md:bg-accent md:shadow mb-8 mt-5 flex text-accent-content">
+      <div className="card bg-accent md:shadow mb-8 mt-5 flex text-accent-content">
         <div className="card-content grid-cols-5 md:grid">
           <div className="prose col-span-2 flex flex-wrap content-start md:text-left p-5 justify-center">
             <h1 className="text-xl font-bold text-center w-full text-accent-content">
@@ -63,7 +63,7 @@ export default function Curlsbot(): JSX.Element {
               onOpenChange={setIsAdvancedOpen}
             />
           </div>
-          <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">
+          <div className="card col-span-3 w-full bg-accent-focus ">
             <EntryForm onAnalyze={handleAnalyze} />
           </div>
         </div>
