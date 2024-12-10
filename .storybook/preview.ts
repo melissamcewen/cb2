@@ -21,14 +21,9 @@ const preview: Preview = {
         // Show as a dropdown in Storybook toolbar
         icon: 'paintbrush',
         items: [
-          'light',
-          'dark',
           'cupcake',
           'synthwave',
-          'retro',
-          'cyberpunk',
-          'valentine',
-          'garden',
+          'night',
         ],
         dynamicTitle: true,
       },

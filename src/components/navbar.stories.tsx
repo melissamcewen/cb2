@@ -12,7 +12,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div data-theme="light">
+      <div>
         <Story />
       </div>
     ),
@@ -37,13 +37,3 @@ export const WithActiveLink: Story = {
   },
 };
 
-export const DarkTheme: Story = {
-  args: {},
-  decorators: [
-    (Story) => (
-      <div data-theme="dark">
-        <Story />
-      </div>
-    ),
-  ],
-};

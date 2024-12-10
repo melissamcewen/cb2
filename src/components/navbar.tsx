@@ -3,14 +3,8 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 
 const themes = [
-  'light',
-  'dark',
   'cupcake',
   'synthwave',
-  'retro',
-  'cyberpunk',
-  'valentine',
-  'garden',
 ];
 
 export default function Navbar(): JSX.Element {

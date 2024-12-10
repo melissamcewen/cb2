@@ -21,16 +21,13 @@ export default function Checkbox({
       <input
         ref={checkboxRef}
         type="checkbox"
-        className="checkbox checkbox-sm"
+        className="checkbox checkbox-sm checkbox-primary"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
       />
       <span className="text-sm">{label}</span>
       {indeterminate && onExpand && (
-        <button
-          onClick={onExpand}
-          className="btn btn-xs btn-ghost"
-        >
+        <button onClick={onExpand} className="btn btn-xs btn-ghost">
           More options
         </button>
       )}

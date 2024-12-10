@@ -11,14 +11,10 @@ module.exports = {
   ],
   daisyui: {
     themes: [
-      'light',
-      'dark',
       'cupcake',
       'synthwave',
-      'retro',
-      'cyberpunk',
-      'valentine',
-      'garden',
+      'night'
     ],
   },
+  darkMode: ['selector', '[data-theme="synthwave"]']
 };
