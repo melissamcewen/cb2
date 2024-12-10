@@ -1,15 +1,24 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  plugins: [require('daisyui'), require('@tailwindcss/typography')],
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui')
+  ],
   daisyui: {
-    themes: ['light', 'dark', 'cupcake', 'synthwave', 'retro', 'cyberpunk', 'valentine', 'garden'],
-    darkTheme: 'dark',
-  },
-  theme: {
-    extend: {
-      boxShadow: {
-        DEFAULT: '10px 10px 0px',
-      },
-    },
+    themes: [
+      'light',
+      'dark',
+      'cupcake',
+      'synthwave',
+      'retro',
+      'cyberpunk',
+      'valentine',
+      'garden',
+    ],
   },
 };

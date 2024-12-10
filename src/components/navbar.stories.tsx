@@ -5,11 +5,18 @@ const meta = {
   title: 'Components/Navbar',
   component: Navbar,
   parameters: {
-    layout: 'fullscreen',  // Use fullscreen for nav
+    layout: 'fullscreen',
     backgrounds: {
       default: 'light',
     },
   },
+  decorators: [
+    (Story) => (
+      <div data-theme="light">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Navbar>;
 
 export default meta;
@@ -28,4 +35,15 @@ export const WithActiveLink: Story = {
       },
     },
   },
+};
+
+export const DarkTheme: Story = {
+  args: {},
+  decorators: [
+    (Story) => (
+      <div data-theme="dark">
+        <Story />
+      </div>
+    ),
+  ],
 };
