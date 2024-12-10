@@ -92,6 +92,7 @@ const categoryConfig: CategoryConfig = {
 export default function Curlsbot(): JSX.Element {
   const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
   const [showResults, setShowResults] = useState(false);
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
   const handlePreferenceChange = (pref: string, checked: boolean): void => {
     setPreferences((prev) => ({
@@ -131,12 +132,16 @@ export default function Curlsbot(): JSX.Element {
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
               config={categoryConfig}
+              isAdvancedOpen={isAdvancedOpen}
+              onAdvancedOpen={() => setIsAdvancedOpen(true)}
             />
             <AdvancedForm
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
               categoryGroups={categoryGroups}
               config={categoryConfig}
+              isOpen={isAdvancedOpen}
+              onOpenChange={setIsAdvancedOpen}
             />
           </div>
           <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">

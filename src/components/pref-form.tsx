@@ -7,6 +7,8 @@ export default function PrefForm({
   preferences,
   onPreferenceChange,
   config,
+  isAdvancedOpen,
+  onAdvancedOpen
 }: PrefFormProps): JSX.Element {
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
     {},
@@ -34,9 +36,8 @@ export default function PrefForm({
 
   const isGroupIndeterminate = (groupName: string): boolean => {
     const group = categoryGroups[groupName];
-    const categoryValues = Object.keys(group.categories).map(
-      (cat) => preferences[cat] || false,
-    );
+    const categoryValues = Object.keys(group.categories)
+      .map(cat => preferences[cat] || false);
     const checkedCount = categoryValues.filter(Boolean).length;
     return checkedCount > 0 && checkedCount < categoryValues.length;
   };
@@ -63,6 +64,7 @@ export default function PrefForm({
             checked={isGroupChecked(groupName)}
             indeterminate={isGroupIndeterminate(groupName)}
             onChange={(checked) => handleGroupChange(groupName, checked)}
+            onExpand={!isAdvancedOpen && isGroupIndeterminate(groupName) ? onAdvancedOpen : undefined}
           />
         </div>
       ))}

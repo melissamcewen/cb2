@@ -42,29 +42,53 @@ const mockConfig: CategoryConfig = {
 };
 
 describe('AdvancedForm', () => {
-  it('shows only configured advanced options when button is clicked', async () => {
-    render(
+  const defaultProps = {
+    isOpen: false,
+    onOpenChange: () => {},
+  };
+
+  it('shows/hides content based on isOpen prop', async () => {
+    const mockOnOpenChange = jest.fn();
+    const { rerender } = render(
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
         categoryGroups={mockCategoryGroups}
         config={mockConfig}
+        isOpen={false}
+        onOpenChange={mockOnOpenChange}
       />,
     );
 
     // Initially options should be hidden
-    expect(screen.queryByText('Water Soluble Silicones')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Water Soluble Silicones'),
+    ).not.toBeInTheDocument();
 
-    // Click to show options
-    await act(async () => {
-      fireEvent.click(screen.getByText(/more options/i));
-    });
+    // Click button should call onOpenChange
+    fireEvent.click(screen.getByText(/more options/i));
+    expect(mockOnOpenChange).toHaveBeenCalledWith(true);
 
-    // Should show configured advanced options
+    // Rerender with isOpen=true
+    rerender(
+      <AdvancedForm
+        preferences={{}}
+        onPreferenceChange={() => {}}
+        categoryGroups={mockCategoryGroups}
+        config={mockConfig}
+        isOpen={true}
+        onOpenChange={mockOnOpenChange}
+      />,
+    );
+
+    // Options should now be visible
     expect(screen.getByText('Water Soluble Silicones')).toBeInTheDocument();
     expect(screen.getByText('Non-water Soluble Silicones')).toBeInTheDocument();
     expect(screen.getByText('Waxes')).toBeInTheDocument();
     expect(screen.getByText('Soap')).toBeInTheDocument();
+
+    // Button text should change
+    expect(screen.getByRole('button')).toHaveTextContent(/less options/i);
   });
 
   it('reflects checked state from preferences', async () => {
@@ -79,20 +103,19 @@ describe('AdvancedForm', () => {
         onPreferenceChange={() => {}}
         categoryGroups={mockCategoryGroups}
         config={mockConfig}
+        isOpen={true}
+        onOpenChange={() => {}}
       />,
     );
 
-    // Show options
-    await act(async () => {
-      fireEvent.click(screen.getByText(/more options/i));
-    });
-
     // Check correct boxes are checked
     expect(screen.getByLabelText('Water Soluble Silicones')).toBeChecked();
-    expect(screen.getByLabelText('Non-water Soluble Silicones')).not.toBeChecked();
+    expect(
+      screen.getByLabelText('Non-water Soluble Silicones'),
+    ).not.toBeChecked();
   });
 
-  it('calls onPreferenceChange when option is toggled', async () => {
+  it('calls onPreferenceChange when option is toggled', () => {
     const mockOnChange = jest.fn();
     render(
       <AdvancedForm
@@ -100,40 +123,41 @@ describe('AdvancedForm', () => {
         onPreferenceChange={mockOnChange}
         categoryGroups={mockCategoryGroups}
         config={mockConfig}
+        isOpen={true}
+        onOpenChange={() => {}}
       />,
     );
-
-    // Show options
-    await act(async () => {
-      fireEvent.click(screen.getByText(/more options/i));
-    });
 
     // Toggle an option
     fireEvent.click(screen.getByLabelText('Water Soluble Silicones'));
     expect(mockOnChange).toHaveBeenCalledWith('water-soluble', true);
   });
 
-  it('toggles visibility with button text', async () => {
-    render(
+  it('shows correct button text based on isOpen state', () => {
+    const { rerender } = render(
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
         categoryGroups={mockCategoryGroups}
         config={mockConfig}
+        isOpen={false}
+        onOpenChange={() => {}}
       />,
     );
 
-    const button = screen.getByRole('button');
-    expect(button).toHaveTextContent(/more options/i);
+    expect(screen.getByRole('button')).toHaveTextContent(/more options/i);
 
-    await act(async () => {
-      fireEvent.click(button);
-    });
-    expect(button).toHaveTextContent(/less options/i);
+    rerender(
+      <AdvancedForm
+        preferences={{}}
+        onPreferenceChange={() => {}}
+        categoryGroups={mockCategoryGroups}
+        config={mockConfig}
+        isOpen={true}
+        onOpenChange={() => {}}
+      />,
+    );
 
-    await act(async () => {
-      fireEvent.click(button);
-    });
-    expect(button).toHaveTextContent(/more options/i);
+    expect(screen.getByRole('button')).toHaveTextContent(/less options/i);
   });
 });

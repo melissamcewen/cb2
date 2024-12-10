@@ -20,6 +20,8 @@ export interface AdvancedFormProps {
   onPreferenceChange: (pref: string, checked: boolean) => void;
   categoryGroups: Record<string, CategoryGroup>;
   config: CategoryConfig;
+  isOpen: boolean;
+  onOpenChange: (isOpen: boolean) => void;
 }
 
 export interface PrefFormProps {
@@ -27,6 +29,8 @@ export interface PrefFormProps {
   preferences: Record<string, boolean>;
   onPreferenceChange: (pref: string, checked: boolean) => void;
   config: CategoryConfig;
+  isAdvancedOpen: boolean;
+  onAdvancedOpen: () => void;
 }
 
 export enum ResultState {

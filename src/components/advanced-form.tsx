@@ -7,10 +7,10 @@ export default function AdvancedForm({
   preferences,
   onPreferenceChange,
   categoryGroups,
-  config
+  config,
+  isOpen,
+  onOpenChange
 }: AdvancedFormProps): JSX.Element {
-  const [isOpen, setIsOpen] = useState(false);
-
   // Get all categories and filter to only show configured advanced categories
   const allCategories = Object.values(categoryGroups).reduce<Record<string, Category>>((acc, group) => ({
     ...acc,
@@ -23,7 +23,7 @@ export default function AdvancedForm({
   return (
     <div className="w-full">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => onOpenChange(!isOpen)}
         className="btn btn-sm btn-ghost w-full"
       >
         {isOpen ? '- Less options' : '+ More options'}

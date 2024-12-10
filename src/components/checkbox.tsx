@@ -26,7 +26,7 @@ export default function Checkbox({
         onChange={(e) => onChange(e.target.checked)}
       />
       <span className="text-sm">{label}</span>
-      {indeterminate && (
+      {indeterminate && onExpand && (
         <button
           onClick={onExpand}
           className="btn btn-xs btn-ghost"

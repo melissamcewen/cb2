@@ -38,6 +38,11 @@ const mockConfig: CategoryConfig = {
 };
 
 describe('PrefForm', () => {
+  const defaultProps = {
+    isAdvancedOpen: false,
+    onAdvancedOpen: () => {},
+  };
+
   it('renders configured main groups and categories', () => {
     render(
       <PrefForm
@@ -45,6 +50,7 @@ describe('PrefForm', () => {
         preferences={{}}
         onPreferenceChange={() => {}}
         config={mockConfig}
+        {...defaultProps}
       />,
     );
     // Should show configured main group
@@ -62,6 +68,7 @@ describe('PrefForm', () => {
         preferences={{}}
         onPreferenceChange={() => {}}
         config={mockConfig}
+        {...defaultProps}
       />,
     );
     expect(screen.getByText('Silicones')).toBeInTheDocument();
@@ -79,6 +86,7 @@ describe('PrefForm', () => {
         preferences={partialPreferences}
         onPreferenceChange={() => {}}
         config={mockConfig}
+        {...defaultProps}
       />,
     );
 
@@ -98,6 +106,7 @@ describe('PrefForm', () => {
         preferences={allCheckedPreferences}
         onPreferenceChange={() => {}}
         config={mockConfig}
+        {...defaultProps}
       />,
     );
 
@@ -115,6 +124,7 @@ describe('PrefForm', () => {
         preferences={{}}
         onPreferenceChange={mockOnChange}
         config={mockConfig}
+        {...defaultProps}
       />,
     );
 
@@ -139,6 +149,7 @@ describe('PrefForm', () => {
         preferences={allCheckedPreferences}
         onPreferenceChange={mockOnChange}
         config={mockConfig}
+        {...defaultProps}
       />,
     );
 
@@ -148,5 +159,60 @@ describe('PrefForm', () => {
     // Should update both subcategories to false
     expect(mockOnChange).toHaveBeenCalledWith('water-soluble', false);
     expect(mockOnChange).toHaveBeenCalledWith('non-water-soluble', false);
+  });
+
+  it('shows More options button only when advanced is not open', () => {
+    // Set up partial preferences to create indeterminate state
+    const partialPreferences = {
+      'water-soluble': true,
+      'non-water-soluble': false,
+    };
+
+    const { rerender } = render(
+      <PrefForm
+        categoryGroups={mockCategoryGroups}
+        preferences={partialPreferences}  // Use partial preferences
+        onPreferenceChange={() => {}}
+        config={mockConfig}
+        isAdvancedOpen={false}
+        onAdvancedOpen={() => {}}
+      />,
+    );
+
+    // Should show More options when advanced is closed AND state is indeterminate
+    expect(screen.getByText('More options')).toBeInTheDocument();
+
+    // Rerender with advanced open
+    rerender(
+      <PrefForm
+        categoryGroups={mockCategoryGroups}
+        preferences={partialPreferences}  // Keep partial preferences
+        onPreferenceChange={() => {}}
+        config={mockConfig}
+        isAdvancedOpen={true}
+        onAdvancedOpen={() => {}}
+      />,
+    );
+
+    // Should not show More options when advanced is open
+    expect(screen.queryByText('More options')).not.toBeInTheDocument();
+
+    // Additional test case: when all checked, no More options even when closed
+    rerender(
+      <PrefForm
+        categoryGroups={mockCategoryGroups}
+        preferences={{
+          'water-soluble': true,
+          'non-water-soluble': true,
+        }}
+        onPreferenceChange={() => {}}
+        config={mockConfig}
+        isAdvancedOpen={false}
+        onAdvancedOpen={() => {}}
+      />,
+    );
+
+    // Should not show More options when all checked, even if advanced is closed
+    expect(screen.queryByText('More options')).not.toBeInTheDocument();
   });
 });
