@@ -158,7 +158,11 @@ export default function Curlsbot(): JSX.Element {
               message="We've analyzed your ingredients. See details below."
             />
             {testIngredients.map((ingredient) => (
-              <IngredientsCard key={ingredient.name} ingredient={ingredient} />
+              <IngredientsCard
+                key={ingredient.name}
+                ingredient={ingredient}
+                matchDetails={{ confidence: 'unknown' }}
+              />
             ))}
           </>
         )}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Checkbox from './checkbox';
 import { PrefFormProps } from '@/types';
+import type { Category } from '@/types';
 
 export default function PrefForm({
   categoryGroups,

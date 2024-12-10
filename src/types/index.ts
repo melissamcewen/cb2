@@ -1,6 +1,6 @@
-import type { CategoryGroup, Category, MatchConfig } from 'haircare-ingredients-analyzer';
+import type { CategoryGroup, Category, MatchConfig, MatchDetails } from 'haircare-ingredients-analyzer';
 
-export type { CategoryGroup, Category, MatchConfig };
+export type { CategoryGroup, Category, MatchConfig, MatchDetails };
 
 
 export interface CheckboxProps {
@@ -49,4 +49,9 @@ export interface CategoryConfig {
   mainGroups: string[];  // Category group IDs to show in main options
   mainCategories: string[];  // Individual category IDs to show in main options
   advancedCategories: string[];  // Category IDs to show in advanced options
+}
+
+export interface IngredientsCardProps {
+  ingredient: Ingredient;
+  matchDetails: MatchDetails;
 }

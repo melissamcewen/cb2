@@ -1,32 +1,71 @@
-import type { MatchConfig } from 'haircare-ingredients-analyzer';
+import type { Ingredient, MatchDetails, MatchType, MatchSearch } from 'haircare-ingredients-analyzer';
+import {
+  ExclamationTriangleIcon,
+  CheckCircleIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/solid';
 
-interface Ingredient {
-  name: string;
-  description?: string;
-  category: string[];
-  notes?: string;
-  source?: string[];
-  synonyms?: string[];
-  link?: string[];
-  matchConfig?: MatchConfig;
-}
+const getMatchState = (confidence: number) => {
+  if (confidence >= 0.8) return 'perfect';
+  if (confidence >= 0.5) return 'low_confidence';
+  return 'unknown';
+};
+
+const stateConfig = {
+  perfect: {
+    icon: CheckCircleIcon,
+    bgColor: 'bg-success',
+    textColor: 'text-success-content',
+    label: 'Perfect Match',
+  },
+  low_confidence: {
+    icon: ExclamationTriangleIcon,
+    bgColor: 'bg-warning',
+    textColor: 'text-warning-content',
+    label: 'Low Confidence Match',
+  },
+  unknown: {
+    icon: QuestionMarkCircleIcon,
+    bgColor: 'bg-neutral',
+    textColor: 'text-neutral-content',
+    label: 'Unknown Ingredient',
+  },
+};
 
 interface IngredientsCardProps {
   ingredient: Ingredient;
+  matchDetails: MatchDetails;
 }
 
-export default function IngredientsCard({ ingredient }: IngredientsCardProps): JSX.Element {
+const defaultMatch: MatchDetails = {
+  confidence: 0,
+  matched: false,
+  matchTypes: [] as Array<'exact' | 'partial' | 'none'>,
+  searchType: 'none' as 'exact' | 'partial' | 'none'
+};
+
+export default function IngredientsCard({
+  ingredient,
+  matchDetails = defaultMatch,
+}: IngredientsCardProps): JSX.Element {
+  const state = getMatchState(matchDetails.confidence ?? 0);
+  const { icon: Icon, bgColor, textColor, label } = stateConfig[state];
+
   return (
-    <div className="card bg-base-100 shadow">
+    <div
+      data-testid="ingredients-card"
+      className={`card shadow ${bgColor} ${textColor}`}
+    >
       <div className="card-body">
-        <h2 className="card-title">{ingredient.name}</h2>
+        <div className="flex items-center gap-2">
+          <Icon className="h-6 w-6" />
+          <h2 className="card-title">{ingredient.name}</h2>
+          <span className="text-sm opacity-75">{label}</span>
+        </div>
         {ingredient.description && <p>{ingredient.description}</p>}
         <div className="flex flex-wrap gap-2 mt-2">
           {ingredient.category.map((cat) => (
-            <span
-              key={cat}
-              className="badge badge-primary"
-            >
+            <span key={cat} className="badge badge-primary">
               {cat}
             </span>
           ))}
