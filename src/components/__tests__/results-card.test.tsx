@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import ResultsCard from '../results-card';
-import { ResultState } from '../../types';
+import { ResultState } from '@/types';
 
 describe('ResultsCard', () => {
   const mockProps = {

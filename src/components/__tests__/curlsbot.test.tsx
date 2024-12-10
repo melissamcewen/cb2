@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react';
 import Curlsbot from '../curlsbot';
+import { ResultState } from '@/types';
 
 describe('Curlsbot', () => {
   it('renders the main title', () => {

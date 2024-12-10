@@ -1,6 +1,4 @@
-interface MatchConfig {
-  // Add match config properties if needed
-}
+import type { MatchConfig } from 'haircare-ingredients-analyzer';
 
 interface Ingredient {
   name: string;

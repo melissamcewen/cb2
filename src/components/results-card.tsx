@@ -1,5 +1,5 @@
 import { ExclamationTriangleIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
-import { ResultState, ResultsCardProps } from '../types';
+import { ResultState, ResultsCardProps } from '@/types';
 
 const stateConfig = {
   [ResultState.INFO]: {

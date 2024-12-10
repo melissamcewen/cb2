@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import Checkbox from './checkbox';
-import { AdvancedFormProps } from '../types';
+import { AdvancedFormProps } from '@/types';
+import type { Category } from 'haircare-ingredients-analyzer';
 
 export default function AdvancedForm({
   preferences,
   onPreferenceChange,
-  advancedCategories
+  categoryGroups,
+  config
 }: AdvancedFormProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Get all categories and filter to only show configured advanced categories
+  const allCategories = Object.values(categoryGroups).reduce<Record<string, Category>>((acc, group) => ({
+    ...acc,
+    ...group.categories
+  }), {});
+
+  const filteredCategories = Object.entries(allCategories)
+    .filter(([categoryId]) => config.advancedCategories.includes(categoryId));
 
   return (
     <div className="w-full">
@@ -20,7 +31,7 @@ export default function AdvancedForm({
 
       {isOpen && (
         <div className="mt-2 space-y-2">
-          {Object.entries(advancedCategories).map(([key, category]) => (
+          {filteredCategories.map(([key, category]) => (
             <Checkbox
               key={key}
               label={category.name}

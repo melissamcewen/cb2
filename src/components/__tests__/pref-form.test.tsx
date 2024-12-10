@@ -1,38 +1,68 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react';
 import PrefForm from '../pref-form';
-import { CategoryGroup, AdvancedCategory } from '../../types';
+import type { CategoryGroup } from 'haircare-ingredients-analyzer';
+import type { CategoryConfig } from '@/types';
 
 const mockCategoryGroups: Record<string, CategoryGroup> = {
   silicones: {
     name: 'Silicones',
     description: 'Test description',
-    categories: {}
-  }
+    categories: {
+      'water-soluble': {
+        name: 'Water Soluble',
+        description: 'Test description',
+      },
+      'non-water-soluble': {
+        name: 'Non-water Soluble',
+        description: 'Test description',
+      },
+    },
+  },
+  sulfates: {
+    name: 'Sulfates',
+    description: 'Test description',
+    categories: {
+      sulfates: {
+        name: 'Sulfates',
+        description: 'Test description',
+      },
+    },
+  },
 };
 
-const mockAdvancedCategories: Record<string, AdvancedCategory> = {
-  'water-soluble': {
-    name: 'Water Soluble Silicones',
-    description: 'Test description',
-    parentGroup: 'silicones'
-  },
-  'non-water-soluble': {
-    name: 'Non-water Soluble Silicones',
-    description: 'Test description',
-    parentGroup: 'silicones'
-  }
+const mockConfig: CategoryConfig = {
+  mainGroups: ['silicones'],
+  mainCategories: ['sulfates'],
+  advancedCategories: ['water-soluble', 'non-water-soluble'],
 };
 
 describe('PrefForm', () => {
+  it('renders configured main groups and categories', () => {
+    render(
+      <PrefForm
+        categoryGroups={mockCategoryGroups}
+        preferences={{}}
+        onPreferenceChange={() => {}}
+        config={mockConfig}
+      />,
+    );
+    // Should show configured main group
+    expect(screen.getByText('Silicones')).toBeInTheDocument();
+    // Should show configured main category
+    expect(screen.getByText('Sulfates')).toBeInTheDocument();
+    // Should not show advanced categories
+    expect(screen.queryByText('Water Soluble')).not.toBeInTheDocument();
+  });
+
   it('renders category groups', () => {
     render(
       <PrefForm
         categoryGroups={mockCategoryGroups}
         preferences={{}}
         onPreferenceChange={() => {}}
-        advancedCategories={mockAdvancedCategories}
-      />
+        config={mockConfig}
+      />,
     );
     expect(screen.getByText('Silicones')).toBeInTheDocument();
   });
@@ -40,7 +70,7 @@ describe('PrefForm', () => {
   it('shows indeterminate state when some subcategories are checked', () => {
     const partialPreferences = {
       'water-soluble': true,
-      'non-water-soluble': false
+      'non-water-soluble': false,
     };
 
     render(
@@ -48,18 +78,18 @@ describe('PrefForm', () => {
         categoryGroups={mockCategoryGroups}
         preferences={partialPreferences}
         onPreferenceChange={() => {}}
-        advancedCategories={mockAdvancedCategories}
-      />
+        config={mockConfig}
+      />,
     );
 
-    const checkbox = screen.getByRole('checkbox');
+    const checkbox = screen.getByLabelText('Silicones');
     expect(checkbox).toHaveProperty('indeterminate', true);
   });
 
   it('shows checked state when all subcategories are checked', () => {
     const allCheckedPreferences = {
       'water-soluble': true,
-      'non-water-soluble': true
+      'non-water-soluble': true,
     };
 
     render(
@@ -67,11 +97,12 @@ describe('PrefForm', () => {
         categoryGroups={mockCategoryGroups}
         preferences={allCheckedPreferences}
         onPreferenceChange={() => {}}
-        advancedCategories={mockAdvancedCategories}
-      />
+        config={mockConfig}
+      />,
     );
 
-    const checkbox = screen.getByRole('checkbox');
+    // Get specifically the Silicones checkbox
+    const checkbox = screen.getByLabelText('Silicones');
     expect(checkbox).toBeChecked();
     expect(checkbox).toHaveProperty('indeterminate', false);
   });
@@ -83,8 +114,8 @@ describe('PrefForm', () => {
         categoryGroups={mockCategoryGroups}
         preferences={{}}
         onPreferenceChange={mockOnChange}
-        advancedCategories={mockAdvancedCategories}
-      />
+        config={mockConfig}
+      />,
     );
 
     // Click parent checkbox
@@ -99,7 +130,7 @@ describe('PrefForm', () => {
     const mockOnChange = jest.fn();
     const allCheckedPreferences = {
       'water-soluble': true,
-      'non-water-soluble': true
+      'non-water-soluble': true,
     };
 
     render(
@@ -107,8 +138,8 @@ describe('PrefForm', () => {
         categoryGroups={mockCategoryGroups}
         preferences={allCheckedPreferences}
         onPreferenceChange={mockOnChange}
-        advancedCategories={mockAdvancedCategories}
-      />
+        config={mockConfig}
+      />,
     );
 
     // Click parent checkbox to uncheck

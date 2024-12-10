@@ -1,39 +1,55 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react';
 import AdvancedForm from '../advanced-form';
-import { AdvancedCategory } from '../../types';
+import type { CategoryGroup } from 'haircare-ingredients-analyzer';
+import type { CategoryConfig } from '@/types';
 
-const mockAdvancedCategories: Record<string, AdvancedCategory> = {
-  'water-soluble': {
-    name: 'Water Soluble Silicones',
+const mockCategoryGroups: Record<string, CategoryGroup> = {
+  silicones: {
+    name: 'Silicones',
     description: 'Test description',
-    parentGroup: 'silicones'
+    categories: {
+      'water-soluble': {
+        name: 'Water Soluble Silicones',
+        description: 'Test description',
+      },
+      'non-water-soluble': {
+        name: 'Non-water Soluble Silicones',
+        description: 'Test description',
+      },
+    },
   },
-  'non-water-soluble': {
-    name: 'Non-water Soluble Silicones',
+  other: {
+    name: 'Other',
     description: 'Test description',
-    parentGroup: 'silicones'
+    categories: {
+      waxes: {
+        name: 'Waxes',
+        description: 'Test description',
+      },
+      soap: {
+        name: 'Soap',
+        description: 'Test description',
+      },
+    },
   },
-  'waxes': {
-    name: 'Waxes',
-    description: 'Test description',
-    parentGroup: ''
-  },
-  'soap': {
-    name: 'Soap',
-    description: 'Test description',
-    parentGroup: ''
-  }
+};
+
+const mockConfig: CategoryConfig = {
+  mainGroups: ['silicones'],
+  mainCategories: ['sulfates'],
+  advancedCategories: ['water-soluble', 'non-water-soluble', 'waxes', 'soap'],
 };
 
 describe('AdvancedForm', () => {
-  it('shows more options when button is clicked', async () => {
+  it('shows only configured advanced options when button is clicked', async () => {
     render(
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
-        advancedCategories={mockAdvancedCategories}
-      />
+        categoryGroups={mockCategoryGroups}
+        config={mockConfig}
+      />,
     );
 
     // Initially options should be hidden
@@ -44,23 +60,26 @@ describe('AdvancedForm', () => {
       fireEvent.click(screen.getByText(/more options/i));
     });
 
-    // Options should now be visible
+    // Should show configured advanced options
     expect(screen.getByText('Water Soluble Silicones')).toBeInTheDocument();
     expect(screen.getByText('Non-water Soluble Silicones')).toBeInTheDocument();
+    expect(screen.getByText('Waxes')).toBeInTheDocument();
+    expect(screen.getByText('Soap')).toBeInTheDocument();
   });
 
   it('reflects checked state from preferences', async () => {
     const mockPreferences = {
       'water-soluble': true,
-      'non-water-soluble': false
+      'non-water-soluble': false,
     };
 
     render(
       <AdvancedForm
         preferences={mockPreferences}
         onPreferenceChange={() => {}}
-        advancedCategories={mockAdvancedCategories}
-      />
+        categoryGroups={mockCategoryGroups}
+        config={mockConfig}
+      />,
     );
 
     // Show options
@@ -79,8 +98,9 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={mockOnChange}
-        advancedCategories={mockAdvancedCategories}
-      />
+        categoryGroups={mockCategoryGroups}
+        config={mockConfig}
+      />,
     );
 
     // Show options
@@ -98,8 +118,9 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
-        advancedCategories={mockAdvancedCategories}
-      />
+        categoryGroups={mockCategoryGroups}
+        config={mockConfig}
+      />,
     );
 
     const button = screen.getByRole('button');

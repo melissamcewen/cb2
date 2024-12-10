@@ -1,5 +1,5 @@
 import Navbar from './navbar';
-import { LayoutProps } from '../types';
+import { LayoutProps } from '@/types';
 
 export const siteTitle = 'Curlsbot';
 

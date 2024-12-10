@@ -5,41 +5,49 @@ import EntryForm from './entry-form';
 import AdvancedForm from './advanced-form';
 import ResultsCard from './results-card';
 import IngredientsCard from './ingredients-card';
-import { CategoryGroup, ResultState } from '../types';
-
+import { ResultState, CategoryGroup, CategoryConfig } from '@/types';
 const categoryGroups: Record<string, CategoryGroup> = {
   silicones: {
     name: 'Silicones',
     description: 'Compounds that can form a barrier on hair',
-    categories: {}
+    categories: {
+      'water-soluble': {
+        name: 'Water Soluble Silicones',
+        description: 'Silicones that can be removed with water'
+      },
+      'non-water-soluble': {
+        name: 'Non-water Soluble Silicones',
+        description: 'Silicones that require stronger cleansers'
+      }
+    }
   },
   sulfates: {
-    name: 'Sulfates',
-    description: 'Strong cleansing agents',
-    categories: {}
-  }
-};
-
-const advancedCategories = {
-  'water-soluble': {
-    name: 'Water Soluble Silicones',
-    description: 'Silicones that can be removed with water',
-    parentGroup: 'silicones'
+    name: 'Cleansers',
+    description: 'Cleansing agents that can be harsh on hair and skin',
+    categories: {
+      'sulfates': {
+        name: 'Sulfates',
+        description: 'Common in shampoos and cleansers'
+      },
+      'gentle detergents': {
+        name: 'Gentle Detergents',
+        description: 'Cleansers that are less harsh on hair and skin'
+      }
+    }
   },
-  'non-water-soluble': {
-    name: 'Non-water Soluble Silicones',
-    description: 'Silicones that require stronger cleansers',
-    parentGroup: 'silicones'
-  },
-  'waxes': {
-    name: 'Waxes',
-    description: 'Ingredients that can build up on hair',
-    parentGroup: ''
-  },
-  'soap': {
-    name: 'Soap',
-    description: 'Traditional cleansing agents that can be harsh',
-    parentGroup: ''
+  other: {
+    name: 'Other',
+    description: 'Other ingredients to check',
+    categories: {
+      'waxes': {
+        name: 'Waxes',
+        description: 'Ingredients that can build up on hair'
+      },
+      'soap': {
+        name: 'Soap',
+        description: 'Traditional cleansing agents that can be harsh'
+      }
+    }
   }
 };
 
@@ -69,6 +77,17 @@ const testIngredients = [
     synonyms: ['Dimethylpolysiloxane'],
   },
 ];
+
+const categoryConfig: CategoryConfig = {
+  mainGroups: ['silicones'],
+  mainCategories: ['sulfates'],
+  advancedCategories: [
+    'water-soluble',
+    'non-water-soluble',
+    'waxes',
+    'soap'
+  ]
+};
 
 export default function Curlsbot(): JSX.Element {
   const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
@@ -111,12 +130,13 @@ export default function Curlsbot(): JSX.Element {
               categoryGroups={categoryGroups}
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
-              advancedCategories={advancedCategories}
+              config={categoryConfig}
             />
             <AdvancedForm
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
-              advancedCategories={advancedCategories}
+              categoryGroups={categoryGroups}
+              config={categoryConfig}
             />
           </div>
           <div className="card col-span-3 w-full bg-accent-focus text-neutral-content">

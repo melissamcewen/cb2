@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { CheckboxProps } from '../types';
+import { CheckboxProps } from '@/types';
 
 export default function Checkbox({
   label,
