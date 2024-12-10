@@ -15,22 +15,22 @@ describe('IngredientsCard', () => {
   const mockPerfectMatch: MatchDetails = {
     confidence: 1,
     matched: true,
-    matchTypes: ['exact'] as Array<'exact' | 'partial' | 'none'>,
-    searchType: 'exact' as 'exact' | 'partial' | 'none'
+    matchTypes: ['exactMatch'],
+    searchType: 'ingredient'
   };
 
   const mockLowMatch: MatchDetails = {
     confidence: 0.5,
     matched: true,
-    matchTypes: ['partial'] as Array<'exact' | 'partial' | 'none'>,
-    searchType: 'partial' as 'exact' | 'partial' | 'none'
+    matchTypes: ['partialMatch'],
+    searchType: 'ingredient'
   };
 
   const mockUnknownMatch: MatchDetails = {
     confidence: 0,
     matched: false,
-    matchTypes: ['none'] as Array<'exact' | 'partial' | 'none'>,
-    searchType: 'none' as 'exact' | 'partial' | 'none'
+    matchTypes: ['fuzzyMatch'],
+    searchType: 'ingredient'
   };
 
   it('renders ingredient details with perfect match', () => {

@@ -161,7 +161,12 @@ export default function Curlsbot(): JSX.Element {
               <IngredientsCard
                 key={ingredient.name}
                 ingredient={ingredient}
-                matchDetails={{ confidence: 'unknown' }}
+                matchDetails={{
+                  confidence: 0,
+                  matched: false,
+                  matchTypes: ['fuzzyMatch'],
+                  searchType: 'ingredient'
+                }}
               />
             ))}
           </>

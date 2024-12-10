@@ -1,9 +1,10 @@
-import type { Ingredient, MatchDetails, MatchType, MatchSearch } from 'haircare-ingredients-analyzer';
+import type { Ingredient, MatchDetails } from 'haircare-ingredients-analyzer';
 import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
   QuestionMarkCircleIcon,
 } from '@heroicons/react/24/solid';
+import { MatchType, MatchSearch } from 'haircare-ingredients-analyzer';
 
 const getMatchState = (confidence: number) => {
   if (confidence >= 0.8) return 'perfect';
@@ -40,8 +41,8 @@ interface IngredientsCardProps {
 const defaultMatch: MatchDetails = {
   confidence: 0,
   matched: false,
-  matchTypes: [] as Array<'exact' | 'partial' | 'none'>,
-  searchType: 'none' as 'exact' | 'partial' | 'none'
+  matchTypes: ['fuzzyMatch'],
+  searchType: 'ingredient'
 };
 
 export default function IngredientsCard({
