@@ -7,36 +7,36 @@ const mockCategoryGroups: Record<string, CategoryGroup> = {
     name: 'Silicones',
     description: 'Compounds that can form a barrier on hair',
     categories: {
-      'water-soluble': {
-        name: 'Water Soluble Silicones',
-        description: 'Silicones that can be removed with water'
+      'Water-soluble': {
+        name: 'Water-soluble Silicones',
+        description: 'Silicones that can be removed with water',
       },
-      'non-water-soluble': {
-        name: 'Non-water Soluble Silicones',
-        description: 'Silicones that require stronger cleansers'
-      }
-    }
+      'non-Water-soluble': {
+        name: 'Non-Water-soluble Silicones',
+        description: 'Silicones that require stronger cleansers',
+      },
+    },
   },
   other: {
     name: 'Other',
     description: 'Other ingredients to check',
     categories: {
-      'waxes': {
+      waxes: {
         name: 'Waxes',
-        description: 'Ingredients that can build up on hair'
+        description: 'Ingredients that can build up on hair',
       },
-      'soap': {
+      soap: {
         name: 'Soap',
-        description: 'Traditional cleansing agents that can be harsh'
-      }
-    }
-  }
+        description: 'Traditional cleansing agents that can be harsh',
+      },
+    },
+  },
 };
 
 const mockConfig = {
   mainGroups: ['silicones'],
   mainCategories: ['sulfates'],
-  advancedCategories: ['water-soluble', 'non-water-soluble', 'waxes', 'soap']
+  advancedCategories: ['Water-soluble', 'non-Water-soluble', 'waxes', 'soap'],
 };
 
 const meta = {
@@ -53,7 +53,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     preferences: {},
-    onPreferenceChange: (pref, checked) => console.log('Preference changed:', pref, checked),
+    onPreferenceChange: (pref, checked) =>
+      console.log('Preference changed:', pref, checked),
     categoryGroups: mockCategoryGroups,
     config: mockConfig,
     isOpen: false,
@@ -72,9 +73,9 @@ export const WithSomeChecked: Story = {
   args: {
     ...Open.args,
     preferences: {
-      'water-soluble': true,
-      'non-water-soluble': false,
-      'waxes': true,
+      'Water-soluble': true,
+      'non-Water-soluble': false,
+      waxes: true,
     },
   },
 };

@@ -11,14 +11,15 @@ export default function AdvancedForm({
   isOpen,
   onOpenChange
 }: AdvancedFormProps): JSX.Element {
-  // Get all categories and filter to only show configured advanced categories
-  const allCategories = Object.values(categoryGroups).reduce<Record<string, Category>>((acc, group) => ({
+  // Get all categories from all groups
+  const allCategories = categoryGroups.reduce<Category[]>((acc, group) => [
     ...acc,
     ...group.categories
-  }), {});
+  ], []);
 
-  const filteredCategories = Object.entries(allCategories)
-    .filter(([categoryId]) => config.advancedCategories.includes(categoryId));
+  // Filter categories that match the advanced categories config
+  const filteredCategories = allCategories
+    .filter(category => config.advancedCategories.includes(category.name));
 
   return (
     <div className="w-full bg-accent">
@@ -31,12 +32,12 @@ export default function AdvancedForm({
 
       {isOpen && (
         <div className="mt-2 space-y-2">
-          {filteredCategories.map(([key, category]) => (
+          {filteredCategories.map((category) => (
             <Checkbox
-              key={key}
+              key={category.name}
               label={category.name}
-              checked={preferences[key] || false}
-              onChange={(checked) => onPreferenceChange(key, checked)}
+              checked={preferences[category.name] || false}
+              onChange={(checked) => onPreferenceChange(category.name, checked)}
             />
           ))}
         </div>

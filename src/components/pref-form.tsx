@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Checkbox from './checkbox';
 import { PrefFormProps } from '@/types';
-import type { Category } from '@/types';
+import type { CategoryGroup, Category } from '@/types';
 
 export default function PrefForm({
   categoryGroups,
@@ -11,72 +11,63 @@ export default function PrefForm({
   isAdvancedOpen,
   onAdvancedOpen
 }: PrefFormProps): JSX.Element {
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(
-    {},
-  );
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
 
-  // Get all categories
-  const allCategories = Object.values(categoryGroups).reduce<
-    Record<string, Category>
-  >(
-    (acc, group) => ({
-      ...acc,
-      ...group.categories,
-    }),
-    {},
-  );
+  // Get all categories flattened
+  const allCategories = categoryGroups.reduce<Category[]>((acc, group) => {
+    return [...acc, ...group.categories];
+  }, []);
 
   // Filter to show configured main groups and categories
-  const filteredGroups = Object.entries(categoryGroups).filter(([groupId]) =>
-    config.mainGroups.includes(groupId),
+  const filteredGroups = categoryGroups.filter(group =>
+    config.mainGroups.includes(group.name)
   );
 
-  const mainCategories = Object.entries(allCategories).filter(([categoryId]) =>
-    config.mainCategories.includes(categoryId),
+  const mainCategories = allCategories.filter(category =>
+    config.mainCategories.includes(category.name)
   );
 
-  const isGroupIndeterminate = (groupName: string): boolean => {
-    const group = categoryGroups[groupName];
-    const categoryValues = Object.keys(group.categories)
-      .map(cat => preferences[cat] || false);
+  const isGroupIndeterminate = (group: CategoryGroup): boolean => {
+    const categoryValues = group.categories
+      .map(cat => preferences[cat.name] || false);
     const checkedCount = categoryValues.filter(Boolean).length;
     return checkedCount > 0 && checkedCount < categoryValues.length;
   };
 
-  const isGroupChecked = (groupName: string): boolean => {
-    const group = categoryGroups[groupName];
-    return Object.keys(group.categories).every((cat) => preferences[cat]);
+  const isGroupChecked = (group: CategoryGroup): boolean => {
+    return group.categories.every((cat) =>
+      preferences[cat.name]
+    );
   };
 
-  const handleGroupChange = (groupName: string, checked: boolean): void => {
-    const group = categoryGroups[groupName];
-    Object.keys(group.categories).forEach((cat) => {
-      onPreferenceChange(cat, checked);
+  const handleGroupChange = (group: CategoryGroup, checked: boolean): void => {
+    group.categories.forEach((cat) => {
+      onPreferenceChange(cat.name, checked);
     });
   };
 
   return (
     <div className="w-full space-y-2 text-accent-content">
       {/* Render main groups */}
-      {filteredGroups.map(([groupName, group]) => (
-        <div key={groupName}>
+      {filteredGroups.map((group) => (
+        <div key={group.name}>
           <Checkbox
             label={group.name}
-            checked={isGroupChecked(groupName)}
-            indeterminate={isGroupIndeterminate(groupName)}
-            onChange={(checked) => handleGroupChange(groupName, checked)}
-            onExpand={!isAdvancedOpen && isGroupIndeterminate(groupName) ? onAdvancedOpen : undefined}
+            checked={isGroupChecked(group)}
+            indeterminate={isGroupIndeterminate(group)}
+            onChange={(checked) => handleGroupChange(group, checked)}
+            onExpand={!isAdvancedOpen && isGroupIndeterminate(group) ? () => onAdvancedOpen() : undefined}
           />
         </div>
       ))}
 
       {/* Render individual main categories */}
-      {mainCategories.map(([key, category]) => (
-        <div key={key}>
+      {mainCategories.map((category) => (
+        <div key={category.name}>
           <Checkbox
             label={category.name}
-            checked={preferences[key] || false}
-            onChange={(checked) => onPreferenceChange(key, checked)}
+            checked={preferences[category.name] || false}
+            onChange={(checked) => onPreferenceChange(category.name, checked)}
           />
         </div>
       ))}

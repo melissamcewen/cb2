@@ -30,7 +30,7 @@ export interface AdvancedFormProps {
 }
 
 export interface PrefFormProps {
-  categoryGroups: Record<string, CategoryGroup>;
+  categoryGroups: CategoryGroup[];
   preferences: Record<string, boolean>;
   onPreferenceChange: (pref: string, checked: boolean) => void;
   config: CategoryConfig;

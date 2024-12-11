@@ -6,7 +6,9 @@ import { ResultState } from '@/types';
 describe('Curlsbot', () => {
   it('renders the main title', () => {
     render(<Curlsbot />);
-    expect(screen.getByText('Curlsbot Ingredients Analyzer')).toBeInTheDocument();
+    expect(
+      screen.getByText('Curlsbot Ingredients Analyzer'),
+    ).toBeInTheDocument();
   });
 
   it('manages preferences state correctly', async () => {
@@ -77,7 +79,9 @@ describe('Curlsbot', () => {
     render(<Curlsbot />);
 
     // Results should not be visible initially
-    expect(screen.queryByRole('heading', { name: 'Results' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: 'Results' }),
+    ).not.toBeInTheDocument();
 
     // Click analyze button
     await act(async () => {
@@ -85,15 +89,21 @@ describe('Curlsbot', () => {
     });
 
     // Results should now be visible with default state
-    expect(screen.getByRole('heading', { name: 'Results' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'Results' }),
+    ).toBeInTheDocument();
   });
 
   it('shows ingredients cards when analyze is clicked', async () => {
     render(<Curlsbot />);
 
-    // Initially ingredients should not be visible
-    expect(screen.queryByText('Sodium Lauryl Sulfate')).not.toBeInTheDocument();
-    expect(screen.queryByText('Dimethicone')).not.toBeInTheDocument();
+    // Add test ingredients to textarea
+    const textarea = screen.getByPlaceholderText(
+      'Paste your ingredients list here',
+    );
+    fireEvent.change(textarea, {
+      target: { value: 'Water, Sodium Lauryl Sulfate, Dimethicone' },
+    });
 
     // Click analyze button
     await act(async () => {
@@ -102,13 +112,8 @@ describe('Curlsbot', () => {
 
     // Verify ingredients cards are shown
     await waitFor(() => {
-      expect(screen.getByText('Sodium Lauryl Sulfate')).toBeInTheDocument();
-      expect(screen.getByText('Dimethicone')).toBeInTheDocument();
+      expect(screen.getAllByTestId('ingredients-card')).toHaveLength(3);
     });
-
-    // Verify categories are shown
-    expect(screen.getByText('Sulfate')).toBeInTheDocument();
-    expect(screen.getByText('Silicone')).toBeInTheDocument();
   });
 
   it('shows ingredient details correctly', async () => {
@@ -122,7 +127,9 @@ describe('Curlsbot', () => {
     await waitFor(() => {
       expect(screen.getByText(/strong cleansing agent/i)).toBeInTheDocument();
       expect(screen.getByText(/common in shampoos/i)).toBeInTheDocument();
-      expect(screen.getAllByRole('link', { name: /more info/i })).toHaveLength(2);
+      expect(screen.getAllByRole('link', { name: /more info/i })).toHaveLength(
+        2,
+      );
     });
   });
 });

@@ -5,13 +5,25 @@ import AdvancedForm from './advanced-form';
 import ResultsCard from './results-card';
 import IngredientsCard from './ingredients-card';
 import { ResultState } from '@/types';
-import { categoryGroups, categoryConfig, defaultPreferences } from '@/data/categories';
-import { testIngredients } from '@/data/test-ingredients';
+import { categoryConfig, defaultPreferences } from '@/data/categories';
+import { testIngredients } from '@/data/testIngredients';
+import { testCategories } from '@/data/testCategories';
+import type { Ingredient } from 'haircare-ingredients-analyzer';
+import { Analyzer } from 'haircare-ingredients-analyzer';
+
+const analyzer = new Analyzer({
+  database: {
+    categories: testCategories,
+    ingredients: testIngredients
+  }
+});
 
 export default function Curlsbot(): JSX.Element {
-  const [preferences, setPreferences] = useState<Record<string, boolean>>(defaultPreferences);
+  const [preferences, setPreferences] =
+    useState<Record<string, boolean>>(defaultPreferences);
   const [showResults, setShowResults] = useState(false);
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   const handlePreferenceChange = (pref: string, checked: boolean): void => {
     setPreferences((prev) => ({
@@ -21,7 +33,26 @@ export default function Curlsbot(): JSX.Element {
   };
 
   const handleAnalyze = (): void => {
+    // Get text from textarea
+    const textarea = document.querySelector('textarea');
+    const text = textarea?.value || '';
+
+    // Analyze the ingredients
+    const results = analyzer.analyze(text);
+
+    // Update state with results
     setShowResults(true);
+
+    // Map the results to ingredients cards
+    const analyzedIngredients = results.matches.map(match => ({
+      name: match.name,
+      description: match.details?.description || '',
+      category: match.categories || [],
+      notes: match.details?.notes || '',
+      link: match.details?.link || []
+    }));
+
+    setIngredients(analyzedIngredients);
   };
 
   return (
@@ -47,7 +78,7 @@ export default function Curlsbot(): JSX.Element {
               </div>
             </div>
             <PrefForm
-              categoryGroups={categoryGroups}
+              categoryGroups={testCategories}
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
               config={categoryConfig}
@@ -57,7 +88,7 @@ export default function Curlsbot(): JSX.Element {
             <AdvancedForm
               preferences={preferences}
               onPreferenceChange={handlePreferenceChange}
-              categoryGroups={categoryGroups}
+              categoryGroups={testCategories}
               config={categoryConfig}
               isOpen={isAdvancedOpen}
               onOpenChange={setIsAdvancedOpen}
@@ -76,7 +107,7 @@ export default function Curlsbot(): JSX.Element {
               title="Results"
               message="We've analyzed your ingredients. See details below."
             />
-            {testIngredients.map((ingredient) => (
+            {ingredients.map((ingredient: Ingredient) => (
               <IngredientsCard
                 key={ingredient.name}
                 ingredient={ingredient}
@@ -84,7 +115,7 @@ export default function Curlsbot(): JSX.Element {
                   confidence: 0,
                   matched: false,
                   matchTypes: ['fuzzyMatch'],
-                  searchType: 'ingredient'
+                  searchType: 'ingredient',
                 }}
               />
             ))}

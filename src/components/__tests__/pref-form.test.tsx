@@ -1,41 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react';
 import PrefForm from '../pref-form';
-import type { CategoryGroup } from 'haircare-ingredients-analyzer';
-import type { CategoryConfig } from '@/types';
-
-const mockCategoryGroups: Record<string, CategoryGroup> = {
-  silicones: {
-    name: 'Silicones',
-    description: 'Test description',
-    categories: {
-      'water-soluble': {
-        name: 'Water Soluble',
-        description: 'Test description',
-      },
-      'non-water-soluble': {
-        name: 'Non-water Soluble',
-        description: 'Test description',
-      },
-    },
-  },
-  sulfates: {
-    name: 'Sulfates',
-    description: 'Test description',
-    categories: {
-      sulfates: {
-        name: 'Sulfates',
-        description: 'Test description',
-      },
-    },
-  },
-};
-
-const mockConfig: CategoryConfig = {
-  mainGroups: ['silicones'],
-  mainCategories: ['sulfates'],
-  advancedCategories: ['water-soluble', 'non-water-soluble'],
-};
+import { testCategories } from '@/data/testCategories';
+import { categoryConfig } from '@/data/categories';
 
 describe('PrefForm', () => {
   const defaultProps = {
@@ -46,10 +13,10 @@ describe('PrefForm', () => {
   it('renders configured main groups and categories', () => {
     render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={{}}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         {...defaultProps}
       />,
     );
@@ -58,16 +25,18 @@ describe('PrefForm', () => {
     // Should show configured main category
     expect(screen.getByText('Sulfates')).toBeInTheDocument();
     // Should not show advanced categories
-    expect(screen.queryByText('Water Soluble')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Water-soluble Silicones'),
+    ).not.toBeInTheDocument();
   });
 
   it('renders category groups', () => {
     render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={{}}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         {...defaultProps}
       />,
     );
@@ -76,16 +45,16 @@ describe('PrefForm', () => {
 
   it('shows indeterminate state when some subcategories are checked', () => {
     const partialPreferences = {
-      'water-soluble': true,
-      'non-water-soluble': false,
+      'Water-soluble Silicones': true,
+      'Non-Water-soluble Silicones': false,
     };
 
     render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={partialPreferences}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         {...defaultProps}
       />,
     );
@@ -96,16 +65,16 @@ describe('PrefForm', () => {
 
   it('shows checked state when all subcategories are checked', () => {
     const allCheckedPreferences = {
-      'water-soluble': true,
-      'non-water-soluble': true,
+      'Water-soluble Silicones': true,
+      'Non-Water-soluble Silicones': true,
     };
 
     render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={allCheckedPreferences}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         {...defaultProps}
       />,
     );
@@ -120,10 +89,10 @@ describe('PrefForm', () => {
     const mockOnChange = jest.fn();
     render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={{}}
         onPreferenceChange={mockOnChange}
-        config={mockConfig}
+        config={categoryConfig}
         {...defaultProps}
       />,
     );
@@ -132,23 +101,26 @@ describe('PrefForm', () => {
     fireEvent.click(screen.getByLabelText('Silicones'));
 
     // Should update both subcategories
-    expect(mockOnChange).toHaveBeenCalledWith('water-soluble', true);
-    expect(mockOnChange).toHaveBeenCalledWith('non-water-soluble', true);
+    expect(mockOnChange).toHaveBeenCalledWith('Water-soluble Silicones', true);
+    expect(mockOnChange).toHaveBeenCalledWith(
+      'Non-Water-soluble Silicones',
+      true,
+    );
   });
 
   it('unchecks all subcategories when checked parent is clicked', () => {
     const mockOnChange = jest.fn();
     const allCheckedPreferences = {
-      'water-soluble': true,
-      'non-water-soluble': true,
+      'Water-soluble Silicones': true,
+      'Non-Water-soluble Silicones': true,
     };
 
     render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={allCheckedPreferences}
         onPreferenceChange={mockOnChange}
-        config={mockConfig}
+        config={categoryConfig}
         {...defaultProps}
       />,
     );
@@ -157,62 +129,65 @@ describe('PrefForm', () => {
     fireEvent.click(screen.getByLabelText('Silicones'));
 
     // Should update both subcategories to false
-    expect(mockOnChange).toHaveBeenCalledWith('water-soluble', false);
-    expect(mockOnChange).toHaveBeenCalledWith('non-water-soluble', false);
+    expect(mockOnChange).toHaveBeenCalledWith('Water-soluble Silicones', false);
+    expect(mockOnChange).toHaveBeenCalledWith(
+      'Non-Water-soluble Silicones',
+      false,
+    );
   });
 
   it('shows More options button only when advanced is not open', () => {
     // Set up partial preferences to create indeterminate state
     const partialPreferences = {
-      'water-soluble': true,
-      'non-water-soluble': false,
+      'Water-soluble Silicones': true,
+      'Non-Water-soluble Silicones': false,
     };
 
     const { rerender } = render(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
-        preferences={partialPreferences}  // Use partial preferences
+        categoryGroups={testCategories}
+        preferences={partialPreferences}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         isAdvancedOpen={false}
         onAdvancedOpen={() => {}}
       />,
     );
 
     // Should show More options when advanced is closed AND state is indeterminate
-    expect(screen.getByText('More options')).toBeInTheDocument();
+    expect(screen.getByText(/more options/i)).toBeInTheDocument();
 
     // Rerender with advanced open
     rerender(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
-        preferences={partialPreferences}  // Keep partial preferences
+        categoryGroups={testCategories}
+        preferences={partialPreferences}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         isAdvancedOpen={true}
         onAdvancedOpen={() => {}}
       />,
     );
 
     // Should not show More options when advanced is open
-    expect(screen.queryByText('More options')).not.toBeInTheDocument();
+    expect(screen.queryByText(/more options/i)).not.toBeInTheDocument();
 
     // Additional test case: when all checked, no More options even when closed
     rerender(
       <PrefForm
-        categoryGroups={mockCategoryGroups}
+        categoryGroups={testCategories}
         preferences={{
-          'water-soluble': true,
-          'non-water-soluble': true,
+          'Water-soluble Silicones': true,
+          'Non-Water-soluble Silicones': true,
         }}
         onPreferenceChange={() => {}}
-        config={mockConfig}
+        config={categoryConfig}
         isAdvancedOpen={false}
         onAdvancedOpen={() => {}}
       />,
     );
 
     // Should not show More options when all checked, even if advanced is closed
-    expect(screen.queryByText('More options')).not.toBeInTheDocument();
+    expect(screen.queryByText(/more options/i)).not.toBeInTheDocument();
   });
 });

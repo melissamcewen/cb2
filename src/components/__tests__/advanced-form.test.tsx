@@ -2,44 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react';
 import AdvancedForm from '../advanced-form';
 import type { CategoryGroup } from 'haircare-ingredients-analyzer';
-import type { CategoryConfig } from '@/types';
-
-const mockCategoryGroups: Record<string, CategoryGroup> = {
-  silicones: {
-    name: 'Silicones',
-    description: 'Test description',
-    categories: {
-      'water-soluble': {
-        name: 'Water Soluble Silicones',
-        description: 'Test description',
-      },
-      'non-water-soluble': {
-        name: 'Non-water Soluble Silicones',
-        description: 'Test description',
-      },
-    },
-  },
-  other: {
-    name: 'Other',
-    description: 'Test description',
-    categories: {
-      waxes: {
-        name: 'Waxes',
-        description: 'Test description',
-      },
-      soap: {
-        name: 'Soap',
-        description: 'Test description',
-      },
-    },
-  },
-};
-
-const mockConfig: CategoryConfig = {
-  mainGroups: ['silicones'],
-  mainCategories: ['sulfates'],
-  advancedCategories: ['water-soluble', 'non-water-soluble', 'waxes', 'soap'],
-};
+import { testCategories } from '@/data/testCategories';
+import { categoryConfig } from '@/data/categories';
 
 describe('AdvancedForm', () => {
   const defaultProps = {
@@ -53,8 +17,8 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
-        categoryGroups={mockCategoryGroups}
-        config={mockConfig}
+        categoryGroups={testCategories}
+        config={categoryConfig}
         isOpen={false}
         onOpenChange={mockOnOpenChange}
       />,
@@ -62,7 +26,7 @@ describe('AdvancedForm', () => {
 
     // Initially options should be hidden
     expect(
-      screen.queryByText('Water Soluble Silicones'),
+      screen.queryByText('Water-soluble Silicones'),
     ).not.toBeInTheDocument();
 
     // Click button should call onOpenChange
@@ -74,16 +38,16 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
-        categoryGroups={mockCategoryGroups}
-        config={mockConfig}
+        categoryGroups={testCategories}
+        config={categoryConfig}
         isOpen={true}
         onOpenChange={mockOnOpenChange}
       />,
     );
 
     // Options should now be visible
-    expect(screen.getByText('Water Soluble Silicones')).toBeInTheDocument();
-    expect(screen.getByText('Non-water Soluble Silicones')).toBeInTheDocument();
+    expect(screen.getByText('Water-soluble Silicones')).toBeInTheDocument();
+    expect(screen.getByText('Non-Water-soluble Silicones')).toBeInTheDocument();
     expect(screen.getByText('Waxes')).toBeInTheDocument();
     expect(screen.getByText('Soap')).toBeInTheDocument();
 
@@ -93,25 +57,25 @@ describe('AdvancedForm', () => {
 
   it('reflects checked state from preferences', async () => {
     const mockPreferences = {
-      'water-soluble': true,
-      'non-water-soluble': false,
+      'Water-soluble Silicones': true,
+      'Non-Water-soluble Silicones': false,
     };
 
     render(
       <AdvancedForm
         preferences={mockPreferences}
         onPreferenceChange={() => {}}
-        categoryGroups={mockCategoryGroups}
-        config={mockConfig}
+        categoryGroups={testCategories}
+        config={categoryConfig}
         isOpen={true}
         onOpenChange={() => {}}
       />,
     );
 
     // Check correct boxes are checked
-    expect(screen.getByLabelText('Water Soluble Silicones')).toBeChecked();
+    expect(screen.getByLabelText('Water-soluble Silicones')).toBeChecked();
     expect(
-      screen.getByLabelText('Non-water Soluble Silicones'),
+      screen.getByLabelText('Non-Water-soluble Silicones'),
     ).not.toBeChecked();
   });
 
@@ -121,16 +85,16 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={mockOnChange}
-        categoryGroups={mockCategoryGroups}
-        config={mockConfig}
+        categoryGroups={testCategories}
+        config={categoryConfig}
         isOpen={true}
         onOpenChange={() => {}}
       />,
     );
 
     // Toggle an option
-    fireEvent.click(screen.getByLabelText('Water Soluble Silicones'));
-    expect(mockOnChange).toHaveBeenCalledWith('water-soluble', true);
+    fireEvent.click(screen.getByLabelText('Water-soluble Silicones'));
+    expect(mockOnChange).toHaveBeenCalledWith('Water-soluble Silicones', true);
   });
 
   it('shows correct button text based on isOpen state', () => {
@@ -138,8 +102,8 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
-        categoryGroups={mockCategoryGroups}
-        config={mockConfig}
+        categoryGroups={testCategories}
+        config={categoryConfig}
         isOpen={false}
         onOpenChange={() => {}}
       />,
@@ -151,8 +115,8 @@ describe('AdvancedForm', () => {
       <AdvancedForm
         preferences={{}}
         onPreferenceChange={() => {}}
-        categoryGroups={mockCategoryGroups}
-        config={mockConfig}
+        categoryGroups={testCategories}
+        config={categoryConfig}
         isOpen={true}
         onOpenChange={() => {}}
       />,

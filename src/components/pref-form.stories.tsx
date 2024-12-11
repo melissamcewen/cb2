@@ -7,22 +7,22 @@ const mockCategoryGroups: Record<string, CategoryGroup> = {
     name: 'Silicones',
     description: 'Compounds that can form a barrier on hair',
     categories: {
-      'water-soluble': {
-        name: 'Water Soluble Silicones',
-        description: 'Silicones that can be removed with water'
+      'Water-soluble': {
+        name: 'Water-soluble Silicones',
+        description: 'Silicones that can be removed with water',
       },
-      'non-water-soluble': {
-        name: 'Non-water Soluble Silicones',
-        description: 'Silicones that require stronger cleansers'
-      }
-    }
-  }
+      'non-Water-soluble': {
+        name: 'Non-Water-soluble Silicones',
+        description: 'Silicones that require stronger cleansers',
+      },
+    },
+  },
 };
 
 const mockConfig = {
   mainGroups: ['silicones'],
   mainCategories: ['sulfates'],
-  advancedCategories: ['water-soluble', 'non-water-soluble']
+  advancedCategories: ['Water-soluble', 'non-Water-soluble'],
 };
 
 const meta = {
@@ -40,7 +40,8 @@ export const Default: Story = {
   args: {
     categoryGroups: mockCategoryGroups,
     preferences: {},
-    onPreferenceChange: (pref, checked) => console.log('Preference changed:', pref, checked),
+    onPreferenceChange: (pref, checked) =>
+      console.log('Preference changed:', pref, checked),
     config: mockConfig,
     isAdvancedOpen: false,
     onAdvancedOpen: () => console.log('Advanced opened'),
@@ -51,8 +52,8 @@ export const WithSomeChecked: Story = {
   args: {
     ...Default.args,
     preferences: {
-      'water-soluble': true,
-      'non-water-soluble': false,
+      'Water-soluble': true,
+      'non-Water-soluble': false,
     },
   },
 };

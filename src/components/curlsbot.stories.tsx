@@ -45,14 +45,13 @@ export const WithResults: Story = {
   },
 };
 
-
 export const WithPreferences: Story = {
   args: {},
   parameters: {
     preferences: {
-      'water-soluble': true,
-      'non-water-soluble': false,
-      'waxes': true,
+      'Water-soluble': true,
+      'non-Water-soluble': false,
+      waxes: true,
     },
   },
 };
