@@ -62,9 +62,13 @@ export default function IngredientsCard({
         <div className="flex items-center gap-2">
           <Icon className="h-6 w-6" />
           <h2 className="card-title">{ingredient.name}</h2>
-          <span className="text-sm opacity-75">{label}</span>
+          <span className="text-sm opacity-75">
+            {ingredient.category.length ? ingredient.category.join(', ') : 'Unknown Ingredient'}
+          </span>
         </div>
-        {ingredient.description && <p>{ingredient.description}</p>}
+        {ingredient.description && (
+          <p className="mt-2">{ingredient.description}</p>
+        )}
         <div className="flex flex-wrap gap-2 mt-2">
           {ingredient.category.map((cat) => (
             <span key={cat} className="badge badge-primary">

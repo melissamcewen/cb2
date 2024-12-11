@@ -2,9 +2,7 @@ import { render, screen } from '@testing-library/react';
 import IngredientsCard from '../ingredients-card';
 import type {
   Ingredient,
-  MatchDetails,
-  MatchType,
-  MatchSearch,
+  MatchDetails
 } from 'haircare-ingredients-analyzer';
 
 const mockIngredient: Ingredient = {
@@ -13,7 +11,7 @@ const mockIngredient: Ingredient = {
   category: ['Category 1', 'Category 2'],
   notes: 'Test notes',
   link: ['https://example.com'],
-  synonyms: ['Test synonym'],
+  synonyms: ['Test synonym']
 };
 
 describe('IngredientsCard', () => {
@@ -46,7 +44,7 @@ describe('IngredientsCard', () => {
       />,
     );
 
-    expect(screen.getByText('Perfect Match')).toBeInTheDocument();
+    expect(screen.getByText('Category 1, Category 2')).toBeInTheDocument();
     expect(screen.getByText(mockIngredient.name)).toBeInTheDocument();
   });
 
@@ -58,13 +56,18 @@ describe('IngredientsCard', () => {
       />,
     );
 
-    expect(screen.getByText('Low Confidence Match')).toBeInTheDocument();
+    expect(screen.getByText('Category 1, Category 2')).toBeInTheDocument();
   });
 
   it('renders ingredient details with unknown state', () => {
+    const unknownIngredient: Ingredient = {
+      name: 'Unknown Test',
+      category: [],
+    };
+
     render(
       <IngredientsCard
-        ingredient={mockIngredient}
+        ingredient={unknownIngredient}
         matchDetails={mockUnknownMatch}
       />,
     );
@@ -117,7 +120,7 @@ describe('IngredientsCard', () => {
   it('renders minimal ingredient info without optional fields', () => {
     const minimalIngredient: Ingredient = {
       name: 'Test Ingredient',
-      category: ['Test'],
+      category: ['Test Category'],
     };
 
     render(
@@ -128,7 +131,8 @@ describe('IngredientsCard', () => {
     );
 
     expect(screen.getByText('Test Ingredient')).toBeInTheDocument();
-    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Test Ingredient' })).toBeInTheDocument();
+    expect(screen.getByTestId('ingredients-card')).toHaveTextContent('Test Category');
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 

@@ -49,10 +49,10 @@ export default function Curlsbot(): JSX.Element {
     // Map the results to ingredients cards
     const analyzedIngredients = results.matches.map(match => ({
       name: match.name,
-      description: match.description,
+      description: match.details?.description || '',
       category: match.categories || [],
-      notes: match.notes,
-      link: match.link
+      notes: match.details?.notes || [],
+      link: match.details?.link || ''
     }));
 
     setIngredients(analyzedIngredients);
