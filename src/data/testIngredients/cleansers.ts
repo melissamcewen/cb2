@@ -1,4 +1,4 @@
-import type { Ingredient } from '@/types';
+import type { Ingredient } from 'haircare-ingredients-analyzer';
 
 export const cleansers: Ingredient[] = [
   {
@@ -7,6 +7,13 @@ export const cleansers: Ingredient[] = [
     category: ['sulfate', 'harsh cleanser'],
     notes: 'Can be harsh and stripping on hair',
     synonyms: ['SLES', 'sodium lauryl ether sulfate'],
+  },
+  {
+    name: 'Sodium Lauryl Sulfate',
+    description: 'A strong cleansing agent commonly found in shampoos',
+    category: ['sulfate', 'harsh cleanser'],
+    notes: 'Can be harsh and stripping on hair',
+    synonyms: ['SLS', 'sodium lauryl sulfate'],
   },
   {
     name: 'Cocamidopropyl Betaine',

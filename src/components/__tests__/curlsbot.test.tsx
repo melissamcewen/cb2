@@ -119,14 +119,20 @@ describe('Curlsbot', () => {
   it('shows ingredient details correctly', async () => {
     render(<Curlsbot />);
 
+    // Add test ingredients to textarea
+    const textarea = screen.getByPlaceholderText('Paste your ingredients list here');
+    fireEvent.change(textarea, {
+      target: { value: 'Water, Sodium Lauryl Sulfate, Dimethicone' },
+    });
+
     await act(async () => {
       fireEvent.click(screen.getByText('Analyze'));
     });
 
     // Check for detailed information
     await waitFor(() => {
-      expect(screen.getByText(/strong cleansing agent/i)).toBeInTheDocument();
-      expect(screen.getByText(/common in shampoos/i)).toBeInTheDocument();
+      expect(screen.getByText(/A strong cleansing agent commonly found in shampoos/i)).toBeInTheDocument();
+      expect(screen.getByText(/Can be harsh and stripping on hair/i)).toBeInTheDocument();
       expect(screen.getAllByRole('link', { name: /more info/i })).toHaveLength(
         2,
       );

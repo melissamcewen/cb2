@@ -39,6 +39,9 @@ export default function Curlsbot(): JSX.Element {
 
     // Analyze the ingredients
     const results = analyzer.analyze(text);
+    console.log(text);
+    console.log(analyzer);
+    console.log('Analyzer results:', results);
 
     // Update state with results
     setShowResults(true);
@@ -46,10 +49,10 @@ export default function Curlsbot(): JSX.Element {
     // Map the results to ingredients cards
     const analyzedIngredients = results.matches.map(match => ({
       name: match.name,
-      description: match.details?.description || '',
+      description: match.description,
       category: match.categories || [],
-      notes: match.details?.notes || '',
-      link: match.details?.link || []
+      notes: match.notes,
+      link: match.link
     }));
 
     setIngredients(analyzedIngredients);

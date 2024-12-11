@@ -1,3 +1,3 @@
-import type { Ingredient } from '../../../types';
+import type { Ingredient } from 'haircare-ingredients-analyzer';
 
 export const other: Ingredient[] = [];
